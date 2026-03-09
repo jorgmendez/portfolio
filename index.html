@@ -3,11 +3,11 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Jorge Mendez · Data & Finance Portfolio</title>
+  <title>Customer Churn Analysis | Jorge Mendez</title>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     /* ═══════════════════════════════════════
-       TOKENS
+       TOKENS — matched to main portfolio
     ═══════════════════════════════════════ */
     :root {
       --bg-deep: #060810;
@@ -60,7 +60,7 @@
       font-family: var(--font-body);
       background: var(--bg-deep);
       color: var(--text-primary);
-      line-height: 1.6;
+      line-height: 1.65;
       -webkit-font-smoothing: antialiased;
       overflow-x: hidden;
     }
@@ -188,11 +188,6 @@
       padding: 0.45rem 1.1rem !important;
       font-weight: 600 !important;
       box-shadow: 0 4px 18px rgba(79,140,255,0.25);
-      transition: all 0.3s var(--ease-out-expo) !important;
-    }
-    .nav-cta:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 28px rgba(79,140,255,0.4) !important;
     }
     .theme-toggle {
       width: 2rem; height: 2rem;
@@ -201,775 +196,392 @@
       border-radius: 8px;
       padding: 0 !important;
     }
-    .mobile-toggle {
-      display: none;
-      background: none;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      width: 2.2rem; height: 2.2rem;
-      align-items: center; justify-content: center;
-      cursor: pointer;
-      color: var(--text-primary);
-      font-size: 1.1rem;
-    }
-    @media(max-width:768px) {
-      .mobile-toggle { display: inline-flex; }
-      .nav-links {
-        display: none;
-        position: absolute;
-        top: calc(100% + 0.5rem);
-        left: 0; right: 0;
-        flex-direction: column;
-        background: var(--bg-surface);
-        border: 1px solid var(--border);
-        border-radius: var(--radius-md);
-        padding: 1rem;
-        box-shadow: 0 16px 48px rgba(0,0,0,0.3);
-      }
-      .nav-links.open { display: flex; }
-      .nav-inner { position: relative; }
-    }
 
     /* ═══════════════════════════════════════
-       HERO
+       PROJECT HERO
     ═══════════════════════════════════════ */
-    .hero {
-      min-height: 100vh;
-      display: flex; align-items: center; justify-content: center;
-      padding: 8rem 2rem 4rem;
-      position: relative;
+    .project-hero {
+      padding: 9rem 2rem 3rem;
+      max-width: 1200px;
+      margin: 0 auto;
     }
-    .hero-content { max-width: 880px; text-align: center; }
-    .hero-badge {
-      display: inline-flex; align-items: center; gap: 0.5rem;
+    .project-hero-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
+    .project-hero-text { }
+    .hero-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
       font-family: var(--font-mono);
-      font-size: 0.72rem;
-      letter-spacing: 0.07em;
+      font-size: 0.7rem;
+      letter-spacing: 0.05em;
       text-transform: uppercase;
       color: var(--accent);
-      padding: 0.45rem 1rem;
+      margin-bottom: 1.5rem;
+      padding: 0.4rem 0.9rem;
       border: 1px solid rgba(79,140,255,0.3);
       border-radius: 60px;
-      margin-bottom: 2rem;
-      opacity: 0;
-      animation: fadeUp 0.8s var(--ease-out-expo) 0.2s forwards;
+      transition: all 0.3s ease;
     }
-    .hero-badge::before {
-      content: '';
-      width: 6px; height: 6px;
-      background: var(--accent);
-      border-radius: 50%;
-      animation: pulseDot 2s ease infinite;
+    .hero-back:hover {
+      background: var(--accent-glow);
+      border-color: var(--accent);
     }
-    @keyframes pulseDot {
-      0%,100% { opacity:1; transform:scale(1); }
-      50% { opacity:0.4; transform:scale(1.6); }
-    }
-    .hero h1 {
+    .project-hero-text h1 {
       font-family: var(--font-display);
       font-weight: 900;
-      font-size: clamp(3.2rem, 9vw, 6rem);
-      line-height: 1.05;
-      letter-spacing: -0.04em;
+      font-size: clamp(2rem, 4.5vw, 3rem);
+      line-height: 1.1;
+      letter-spacing: -0.035em;
       margin-bottom: 1rem;
-      opacity: 0;
-      animation: fadeUp 0.8s var(--ease-out-expo) 0.4s forwards;
     }
-    .hero h1 .highlight {
-      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-purple) 50%, var(--accent-warm) 100%);
+    .project-hero-text h1 .hl {
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-purple) 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
     }
-    .hero-tagline {
-      font-family: var(--font-display);
-      font-weight: 600;
-      font-size: clamp(1.1rem, 2.5vw, 1.5rem);
-      letter-spacing: -0.01em;
-      color: var(--text-secondary);
+    .project-meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
       margin-bottom: 1.2rem;
-      opacity: 0;
-      animation: fadeUp 0.8s var(--ease-out-expo) 0.55s forwards;
     }
-    .hero-tagline .tl-accent {
-      color: var(--accent);
-    }
-    .hero-sub {
-      font-size: clamp(0.92rem, 1.6vw, 1.05rem);
-      font-weight: 400;
+    .meta-tag {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      padding: 0.35rem 0.75rem;
+      border-radius: 8px;
+      border: 1px solid var(--border);
       color: var(--text-tertiary);
-      max-width: 600px;
-      margin: 0 auto 2.5rem;
-      line-height: 1.7;
-      opacity: 0;
-      animation: fadeUp 0.8s var(--ease-out-expo) 0.7s forwards;
+    }
+    .meta-tag { border-color: var(--accent); color: var(--accent); }
+    .project-hero-text .desc {
+      color: var(--text-secondary);
+      font-size: 1.02rem;
+      line-height: 1.75;
+      max-width: 520px;
     }
     .hero-actions {
-      display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
-      opacity: 0;
-      animation: fadeUp 0.8s var(--ease-out-expo) 0.85s forwards;
+      display: flex;
+      gap: 0.7rem;
+      margin-top: 1.5rem;
+      flex-wrap: wrap;
     }
     .hero-btn {
       font-family: var(--font-mono);
-      font-size: 0.78rem;
+      font-size: 0.72rem;
       font-weight: 600;
       letter-spacing: 0.04em;
       text-transform: uppercase;
-      padding: 0.85rem 1.8rem;
-      border-radius: 14px;
+      padding: 0.7rem 1.4rem;
+      border-radius: 12px;
       border: 1px solid var(--border);
       background: var(--bg-surface);
       color: var(--text-primary);
       cursor: pointer;
       transition: all 0.3s var(--ease-out-expo);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
     }
     .hero-btn:hover {
       border-color: var(--accent);
-      transform: translateY(-3px);
-      box-shadow: 0 8px 30px rgba(79,140,255,0.15);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 24px rgba(79,140,255,0.15);
     }
     .hero-btn.filled {
       background: linear-gradient(135deg, var(--accent), #6366f1);
       border-color: transparent;
       color: #fff;
-      box-shadow: 0 6px 24px rgba(79,140,255,0.3);
-    }
-    .hero-btn.filled:hover { box-shadow: 0 10px 40px rgba(79,140,255,0.45); }
-
-    .hero-orb {
-      position: absolute;
-      width: 500px; height: 500px;
-      border-radius: 50%;
-      background: radial-gradient(circle, var(--accent-glow), transparent 70%);
-      filter: blur(80px);
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      animation: orbFloat 8s ease-in-out infinite;
-      pointer-events: none;
-    }
-    @keyframes orbFloat {
-      0%,100% { transform: translate(-50%,-50%) scale(1); }
-      50% { transform: translate(-50%,-52%) scale(1.08); }
-    }
-    .scroll-hint {
-      position: absolute;
-      bottom: 2rem;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
-      color: var(--text-tertiary);
-      font-family: var(--font-mono);
-      font-size: 0.62rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      opacity: 0;
-      animation: fadeUp 0.8s var(--ease-out-expo) 1.2s forwards;
-    }
-    .scroll-line {
-      width: 1px; height: 36px;
-      background: linear-gradient(to bottom, var(--accent), transparent);
-      animation: scrollPulse 2s ease-in-out infinite;
-    }
-    @keyframes scrollPulse {
-      0%,100% { opacity:1; transform:scaleY(1); }
-      50% { opacity:0.3; transform:scaleY(0.6); }
+      box-shadow: 0 4px 18px rgba(79,140,255,0.3);
     }
 
-    /* ═══════════════════════════════════════
-       STATS
-    ═══════════════════════════════════════ */
-    .stats-strip { padding: 3rem 2rem; }
-    .stats-inner {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 1px;
-      background: var(--border);
+    /* Hero figure */
+    .project-hero-figure {
       border-radius: var(--radius-lg);
       overflow: hidden;
-    }
-    .stat-item {
-      background: var(--bg-surface);
-      padding: 2rem 1.5rem;
-      text-align: center;
-      transition: all 0.3s ease;
-    }
-    .stat-item:hover { background: var(--bg-elevated); }
-    .stat-number {
-      font-family: var(--font-display);
-      font-weight: 900;
-      font-size: clamp(1.6rem, 3.5vw, 2.2rem);
-      letter-spacing: -0.02em;
-    }
-    .stat-number .a { color: var(--accent); }
-    .stat-label {
-      font-family: var(--font-mono);
-      font-size: 0.65rem;
-      letter-spacing: 0.07em;
-      text-transform: uppercase;
-      color: var(--text-tertiary);
-      margin-top: 0.25rem;
-    }
-    @media(max-width:640px) {
-      .stats-inner { grid-template-columns: repeat(2,1fr); }
-    }
-
-    /* ═══════════════════════════════════════
-       MARQUEE
-    ═══════════════════════════════════════ */
-    .marquee-strip {
-      overflow: hidden;
-      padding: 1.4rem 0;
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      margin: 2rem 0 0;
-    }
-    .marquee-track {
-      display: flex; gap: 3rem;
-      animation: marquee 22s linear infinite;
-      width: max-content;
-    }
-    .marquee-item {
-      font-family: var(--font-display);
-      font-weight: 800;
-      font-size: clamp(1.3rem, 2.5vw, 1.8rem);
-      color: var(--text-tertiary);
-      white-space: nowrap;
-      opacity: 0.25;
-    }
-    .marquee-item .dot {
-      display: inline-block;
-      width: 7px; height: 7px;
-      background: var(--accent);
-      border-radius: 50%;
-      margin: 0 1.2rem;
-      vertical-align: middle;
-    }
-    @keyframes marquee {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
-    }
-
-    /* ═══════════════════════════════════════
-       SECTION FRAMEWORK
-    ═══════════════════════════════════════ */
-    .section { padding: 5rem 2rem; }
-    .section-header {
-      max-width: 1200px;
-      margin: 0 auto 3rem;
-      display: flex; align-items: flex-end; justify-content: space-between;
-      gap: 2rem; flex-wrap: wrap;
-    }
-    .section-tag {
-      font-family: var(--font-mono);
-      font-size: 0.68rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 0.4rem;
-    }
-    .section-title {
-      font-family: var(--font-display);
-      font-weight: 800;
-      font-size: clamp(1.7rem, 3.5vw, 2.5rem);
-      letter-spacing: -0.025em;
-      line-height: 1.15;
-    }
-    .section-desc {
-      color: var(--text-secondary);
-      max-width: 420px;
-      font-size: 0.95rem;
-    }
-
-    /* ═══════════════════════════════════════
-       ABOUT
-    ═══════════════════════════════════════ */
-    .about-grid {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1.5rem;
-    }
-    .about-card {
-      background: var(--bg-surface);
       border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 2.25rem;
-      position: relative;
-      overflow: hidden;
-      transition: all 0.4s var(--ease-out-expo);
+      box-shadow: 0 24px 60px rgba(0,0,0,0.3);
+      transition: all 0.5s var(--ease-out-expo);
     }
-    .about-card:hover {
-      border-color: var(--border-hover);
+    .project-hero-figure:hover {
       transform: translateY(-4px);
-      box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+      box-shadow: 0 32px 80px rgba(0,0,0,0.4);
     }
-    .about-card::after {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 3px;
-      background: linear-gradient(90deg, var(--accent), var(--accent-purple), var(--accent-warm));
-      opacity: 0;
-      transition: opacity 0.3s ease;
-    }
-    .about-card:hover::after { opacity: 1; }
-    .about-card .icon-wrap {
-      width: 46px; height: 46px;
-      border-radius: 13px;
-      background: var(--accent-glow);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.2rem;
-      margin-bottom: 1.1rem;
-    }
-    .about-card h3 {
-      font-family: var(--font-display);
-      font-weight: 700;
-      font-size: 1.15rem;
-      margin-bottom: 0.65rem;
-    }
-    .about-card p {
-      color: var(--text-secondary);
-      font-size: 0.92rem;
-      line-height: 1.7;
-    }
-
-    .about-intro {
-      grid-column: 1 / -1;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 2.5rem;
-      align-items: center;
-    }
-    .about-intro .text-side h3 {
-      font-family: var(--font-display);
-      font-weight: 800;
-      font-size: 1.5rem;
-      margin-bottom: 0.9rem;
-    }
-    .about-intro .text-side p {
-      color: var(--text-secondary);
-      line-height: 1.75;
-      margin-bottom: 0.85rem;
-    }
-    .skills-visual { display: flex; flex-wrap: wrap; gap: 0.5rem; }
-
-    /* ── Skill Groups with category labels ── */
-    .skills-grouped { display: flex; flex-direction: column; gap: 1.1rem; }
-    .skill-group-label {
-      font-family: var(--font-mono);
-      font-size: 0.58rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--text-tertiary);
-      padding-bottom: 0.3rem;
-      border-bottom: 1px solid var(--border);
-      margin-bottom: 0.1rem;
-    }
-    .skill-group-chips { display: flex; flex-wrap: wrap; gap: 0.45rem; }
-
-    /* ── Skill Chips — All equal + hover detail ── */
-    .skill-chip {
-      font-family: var(--font-mono);
-      font-size: 0.68rem;
-      letter-spacing: 0.03em;
-      padding: 0.5rem 0.9rem;
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      background: var(--bg-elevated);
-      color: var(--text-secondary);
-      transition: all 0.3s var(--ease-out-expo);
-      cursor: default;
-      position: relative;
-    }
-    .skill-chip:hover {
-      border-color: var(--accent);
-      color: var(--accent);
-      background: var(--accent-glow);
-      transform: translateY(-2px);
-    }
-    /* Tooltip on hover */
-    .skill-chip[data-detail]::after {
-      content: attr(data-detail);
-      position: absolute;
-      bottom: calc(100% + 8px);
-      left: 50%;
-      transform: translateX(-50%) translateY(4px);
-      font-family: var(--font-body);
-      font-size: 0.65rem;
-      letter-spacing: 0;
-      white-space: nowrap;
-      background: var(--bg-deep);
-      color: var(--text-primary);
-      border: 1px solid var(--border-hover);
-      padding: 0.4rem 0.7rem;
-      border-radius: 8px;
-      opacity: 0;
-      pointer-events: none;
-      transition: all 0.25s var(--ease-out-expo);
-      z-index: 10;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
-    }
-    .skill-chip[data-detail]:hover::after {
-      opacity: 1;
-      transform: translateX(-50%) translateY(0);
+    .project-hero-figure img {
+      width: 100%;
+      display: block;
     }
 
     @media(max-width:768px) {
-      .about-grid { grid-template-columns: 1fr; }
-      .about-intro { grid-template-columns: 1fr; }
+      .project-hero-inner {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
     }
 
     /* ═══════════════════════════════════════
-       EXPERIENCE TIMELINE
+       CONTENT SECTIONS
     ═══════════════════════════════════════ */
-    .timeline {
+    .content-wrap {
       max-width: 1200px;
       margin: 0 auto;
-      position: relative;
+      padding: 0 2rem 5rem;
       display: grid;
-      gap: 1.5rem;
+      grid-template-columns: 200px 1fr;
+      gap: 2.5rem;
     }
-    .timeline::before {
-      content: '';
-      position: absolute;
-      left: 23px;
-      top: 0; bottom: 0;
-      width: 2px;
-      background: linear-gradient(to bottom, var(--accent), var(--border), transparent);
+
+    /* Sidebar TOC */
+    .sidebar {
+      position: sticky;
+      top: 6rem;
+      align-self: start;
     }
-    .tl-item {
-      display: grid;
-      grid-template-columns: 48px 1fr;
-      gap: 1.5rem;
-      position: relative;
-    }
-    .tl-dot {
-      width: 48px; height: 48px;
-      border-radius: 14px;
-      background: var(--bg-surface);
-      border: 2px solid var(--border);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.1rem;
-      z-index: 2;
-      transition: all 0.3s ease;
-    }
-    .tl-item:hover .tl-dot {
-      border-color: var(--accent);
-      background: var(--accent-glow);
-    }
-    .tl-content {
-      background: var(--bg-surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-md);
-      padding: 1.75rem;
-      transition: all 0.4s var(--ease-out-expo);
-    }
-    .tl-item:hover .tl-content {
-      border-color: var(--border-hover);
-      transform: translateY(-2px);
-      box-shadow: 0 12px 36px rgba(0,0,0,0.15);
-    }
-    .tl-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 1rem;
-      flex-wrap: wrap;
-      margin-bottom: 0.75rem;
-    }
-    .tl-content h3 {
-      font-family: var(--font-display);
-      font-weight: 700;
-      font-size: 1.1rem;
-    }
-    .tl-company {
-      color: var(--accent);
-      font-weight: 600;
-      font-size: 0.92rem;
-    }
-    .tl-date {
+    .sidebar-label {
       font-family: var(--font-mono);
-      font-size: 0.65rem;
-      letter-spacing: 0.05em;
+      font-size: 0.6rem;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
       color: var(--text-tertiary);
-      padding: 0.3rem 0.7rem;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      white-space: nowrap;
+      margin-bottom: 0.75rem;
     }
-    .tl-content ul {
+    .toc a {
+      display: block;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--text-tertiary);
+      padding: 0.45rem 0.8rem;
+      border-left: 2px solid var(--border);
+      margin-bottom: 0.15rem;
+      transition: all 0.25s ease;
+    }
+    .toc a:hover {
+      color: var(--text-primary);
+      border-color: var(--border-hover);
+      background: var(--accent-glow);
+      border-radius: 0 8px 8px 0;
+    }
+    .toc a.active {
+      color: var(--accent);
+      border-color: var(--accent);
+    }
+
+    @media(max-width:900px) {
+      .content-wrap { grid-template-columns: 1fr; }
+      .sidebar { display: none; }
+    }
+
+    /* Main content area */
+    .main-content {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    .content-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      transition: all 0.4s var(--ease-out-expo);
+    }
+    .content-card:hover {
+      border-color: var(--border-hover);
+      box-shadow: 0 12px 36px rgba(0,0,0,0.15);
+    }
+    .content-card h2 {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 1.35rem;
+      letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    .content-card h2 .icon {
+      width: 36px; height: 36px;
+      border-radius: 10px;
+      background: var(--accent-glow);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+    .content-card p, .content-card li {
+      color: var(--text-secondary);
+      font-size: 0.93rem;
+      line-height: 1.75;
+    }
+    .content-card ul {
       list-style: none;
       padding: 0;
     }
-    .tl-content li {
-      color: var(--text-secondary);
-      font-size: 0.88rem;
-      line-height: 1.65;
-      padding: 0.25rem 0 0.25rem 1.1rem;
+    .content-card li {
+      padding: 0.3rem 0 0.3rem 1.2rem;
       position: relative;
     }
-    .tl-content li::before {
+    .content-card li::before {
       content: '▸';
       position: absolute;
       left: 0;
       color: var(--accent);
-      font-size: 0.75rem;
+      font-size: 0.8rem;
     }
-    @media(max-width:640px) {
-      .timeline::before { left: 15px; }
-      .tl-item { grid-template-columns: 32px 1fr; gap: 1rem; }
-      .tl-dot { width: 32px; height: 32px; font-size: 0.8rem; border-radius: 10px; }
+    .content-card li strong {
+      color: var(--text-primary);
+      font-weight: 600;
     }
 
-    /* ═══════════════════════════════════════
-       PROJECT CARDS
-    ═══════════════════════════════════════ */
-    .projects-grid {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 1.5rem;
+    /* Note callout */
+    .callout {
+      background: var(--accent-glow);
+      border: 1px solid rgba(79,140,255,0.2);
+      border-radius: var(--radius-sm);
+      padding: 0.9rem 1.1rem;
+      margin-top: 0.75rem;
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
     }
-    .project-card {
+    .callout-icon {
+      color: var(--accent);
+      font-size: 1rem;
+      flex-shrink: 0;
+      margin-top: 0.1rem;
+    }
+
+    /* Insight highlights */
+    .insight-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    .insight-item {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 1.2rem;
+      transition: all 0.3s var(--ease-out-expo);
+    }
+    .insight-item:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+    }
+    .insight-item .insight-label {
+      font-family: var(--font-mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-tertiary);
+      margin-bottom: 0.35rem;
+    }
+    .insight-item .insight-value {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 1.15rem;
+      color: var(--accent);
+      margin-bottom: 0.25rem;
+    }
+    .insight-item .insight-desc {
+      color: var(--text-secondary);
+      font-size: 0.8rem;
+      line-height: 1.55;
+    }
+    @media(max-width:640px) {
+      .insight-grid { grid-template-columns: 1fr; }
+    }
+
+    /* Figures */
+    .figure-card {
       background: var(--bg-surface);
       border: 1px solid var(--border);
       border-radius: var(--radius-lg);
       overflow: hidden;
-      display: flex; flex-direction: column;
-      transition: all 0.5s var(--ease-out-expo);
+      transition: all 0.4s var(--ease-out-expo);
     }
-    .project-card:hover {
+    .figure-card:hover {
       border-color: var(--border-hover);
-      transform: translateY(-6px);
-      box-shadow: 0 24px 60px rgba(0,0,0,0.25);
+      box-shadow: 0 16px 48px rgba(0,0,0,0.2);
     }
-    .project-thumb {
-      position: relative;
-      overflow: hidden;
-      height: 230px;
+    .figure-card img {
+      width: 100%;
+      display: block;
     }
-    .project-thumb img {
-      width: 100%; height: 100%;
-      object-fit: cover;
-      transition: transform 0.6s var(--ease-out-expo);
+    .figure-caption {
+      padding: 1rem 1.5rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
     }
-    .project-card:hover .project-thumb img { transform: scale(1.05); }
-    .project-thumb-overlay {
-      position: absolute; inset: 0;
-      background: linear-gradient(180deg, transparent 40%, var(--bg-surface) 100%);
-      pointer-events: none;
-    }
-    .project-tag {
-      position: absolute;
-      top: 1rem; left: 1rem;
+    .figure-num {
       font-family: var(--font-mono);
-      font-size: 0.62rem;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      padding: 0.3rem 0.7rem;
-      border-radius: 8px;
-      background: var(--glass);
-      backdrop-filter: blur(10px);
-      border: 1px solid var(--border);
-      color: var(--text-secondary);
-    }
-    .project-body {
-      padding: 1.5rem 1.6rem 1rem;
-      flex: 1;
-    }
-    .project-date {
-      font-family: var(--font-mono);
-      font-size: 0.68rem;
+      font-size: 0.65rem;
+      font-weight: 700;
       letter-spacing: 0.05em;
       text-transform: uppercase;
-      color: var(--text-tertiary);
-      margin-bottom: 0.4rem;
+      color: var(--accent);
+      padding: 0.2rem 0.5rem;
+      background: var(--accent-glow);
+      border-radius: 6px;
+      white-space: nowrap;
+      flex-shrink: 0;
     }
-    .project-body h3 {
-      font-family: var(--font-display);
-      font-weight: 700;
-      font-size: 1.15rem;
-      margin-bottom: 0.5rem;
-      letter-spacing: -0.01em;
-      line-height: 1.3;
-    }
-    .project-body p {
+    .figure-caption p {
       color: var(--text-secondary);
       font-size: 0.88rem;
-      line-height: 1.65;
+      line-height: 1.6;
     }
-    .project-meta {
-      display: flex; gap: 0.4rem; flex-wrap: wrap;
-      margin-top: 0.9rem;
+
+    /* Downloads */
+    .download-grid {
+      display: flex;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+      margin-top: 0.5rem;
     }
-    .meta-chip {
-      font-family: var(--font-mono);
-      font-size: 0.6rem;
-      padding: 0.25rem 0.6rem;
-      border-radius: 6px;
-      background: var(--bg-elevated);
-      color: var(--text-tertiary);
-      letter-spacing: 0.03em;
-    }
-    .project-footer { padding: 0 1.6rem 1.5rem; }
-    .project-link {
-      display: inline-flex; align-items: center; gap: 0.5rem;
+    .dl-btn {
       font-family: var(--font-mono);
       font-size: 0.72rem;
       font-weight: 600;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      color: var(--accent);
-      padding: 0.6rem 1.15rem;
-      border-radius: 12px;
-      border: 1px solid var(--accent);
-      transition: all 0.3s var(--ease-out-expo);
-    }
-    .project-link:hover {
-      background: var(--accent);
-      color: #fff;
-      transform: translateX(4px);
-    }
-    .project-link .arrow { transition: transform 0.3s var(--ease-out-expo); }
-    .project-link:hover .arrow { transform: translateX(4px); }
-
-    /* Featured card */
-    .project-card.featured {
-      grid-column: 1 / -1;
-      display: grid;
-      grid-template-columns: 1.2fr 1fr;
-    }
-    .project-card.featured .project-thumb { height: 100%; min-height: 300px; }
-    .project-card.featured .project-body { padding: 2.25rem; }
-    .project-card.featured .project-footer { padding: 0 2.25rem 1.75rem; }
-    .project-card.featured h3 { font-size: 1.4rem; }
-    @media(max-width:768px) {
-      .projects-grid { grid-template-columns: 1fr; }
-      .project-card.featured { grid-template-columns: 1fr; }
-      .project-card.featured .project-thumb { height: 220px; min-height: auto; }
-    }
-
-    /* ═══════════════════════════════════════
-       EDUCATION CARD
-    ═══════════════════════════════════════ */
-    .edu-grid {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1.5rem;
-    }
-    .edu-card {
-      background: var(--bg-surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 2.25rem;
-      transition: all 0.4s var(--ease-out-expo);
-    }
-    .edu-card:hover {
-      border-color: var(--border-hover);
-      transform: translateY(-3px);
-      box-shadow: 0 16px 42px rgba(0,0,0,0.18);
-    }
-    .edu-card h3 {
-      font-family: var(--font-display);
-      font-weight: 700;
-      font-size: 1.15rem;
-      margin-bottom: 0.3rem;
-    }
-    .edu-card .edu-school {
-      color: var(--accent);
-      font-weight: 600;
-      font-size: 0.92rem;
-      margin-bottom: 0.75rem;
-    }
-    .edu-detail {
-      color: var(--text-secondary);
-      font-size: 0.88rem;
-      line-height: 1.7;
-      padding: 0.2rem 0;
-    }
-    .edu-detail strong { color: var(--text-primary); font-weight: 600; }
-    .edu-badges {
-      display: flex; flex-wrap: wrap; gap: 0.4rem;
-      margin-top: 1rem;
-    }
-    .edu-badge {
-      font-family: var(--font-mono);
-      font-size: 0.62rem;
-      padding: 0.3rem 0.7rem;
-      border-radius: 7px;
-      border: 1px solid var(--border);
-      color: var(--text-tertiary);
-    }
-    .edu-badge.highlight {
-      border-color: var(--accent-mint);
-      color: var(--accent-mint);
-      background: rgba(52,211,153,0.08);
-    }
-    @media(max-width:768px) {
-      .edu-grid { grid-template-columns: 1fr; }
-    }
-
-    /* ═══════════════════════════════════════
-       CONTACT & FOOTER
-    ═══════════════════════════════════════ */
-    .contact-section { padding: 5rem 2rem 3rem; }
-    .contact-inner {
-      max-width: 700px;
-      margin: 0 auto;
-      text-align: center;
-    }
-    .contact-inner h2 {
-      font-family: var(--font-display);
-      font-weight: 900;
-      font-size: clamp(2rem, 5vw, 2.8rem);
-      letter-spacing: -0.03em;
-      margin-bottom: 1rem;
-    }
-    .contact-inner > p {
-      color: var(--text-secondary);
-      font-size: 1.02rem;
-      margin-bottom: 2.5rem;
-      line-height: 1.7;
-    }
-    .contact-links {
-      display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
-    }
-    .contact-btn {
-      font-family: var(--font-mono);
-      font-size: 0.75rem;
-      font-weight: 600;
       letter-spacing: 0.04em;
       text-transform: uppercase;
-      padding: 0.8rem 1.8rem;
-      border-radius: 14px;
+      padding: 0.75rem 1.3rem;
+      border-radius: 12px;
       border: 1px solid var(--border);
-      background: var(--bg-surface);
+      background: var(--bg-elevated);
       color: var(--text-primary);
-      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
       transition: all 0.3s var(--ease-out-expo);
-      display: inline-flex; align-items: center; gap: 0.5rem;
     }
-    .contact-btn:hover {
+    .dl-btn:hover {
       border-color: var(--accent);
-      transform: translateY(-3px);
-      box-shadow: 0 8px 30px rgba(79,140,255,0.15);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(79,140,255,0.15);
+      color: var(--accent);
     }
-    .contact-btn.primary-contact {
-      background: linear-gradient(135deg, var(--accent), #6366f1);
-      border-color: transparent;
-      color: #fff;
-      box-shadow: 0 6px 24px rgba(79,140,255,0.3);
+    .dl-btn .dl-icon {
+      font-size: 1.05rem;
     }
-    .contact-btn.primary-contact:hover {
-      box-shadow: 0 10px 40px rgba(79,140,255,0.45);
-    }
+
+    /* ═══════════════════════════════════════
+       FOOTER
+    ═══════════════════════════════════════ */
     .site-footer {
       padding: 2rem;
       text-align: center;
@@ -1000,7 +612,16 @@
     .reveal-d1 { transition-delay: 0.1s; }
     .reveal-d2 { transition-delay: 0.2s; }
     .reveal-d3 { transition-delay: 0.3s; }
-    .reveal-d4 { transition-delay: 0.4s; }
+
+    .hero-anim {
+      opacity: 0;
+      animation: fadeUp 0.8s var(--ease-out-expo) forwards;
+    }
+    .ha1 { animation-delay: 0.1s; }
+    .ha2 { animation-delay: 0.25s; }
+    .ha3 { animation-delay: 0.4s; }
+    .ha4 { animation-delay: 0.55s; }
+    .ha5 { animation-delay: 0.7s; }
   </style>
 </head>
 <body>
@@ -1013,12 +634,11 @@
     <!-- ─── NAV ─── -->
     <header class="site-nav" id="siteNav">
       <div class="nav-inner">
-        <div class="nav-brand">J<span>.</span>Mendez</div>
-        <button class="mobile-toggle" id="mobileToggle" aria-label="Menu">☰</button>
-        <div class="nav-links" id="navLinks">
-          <a href="#about">About</a>
-          <a href="#experience">Experience</a>
-          <a href="#projects">Projects</a>
+        <a href="../../index.html" class="nav-brand">J<span>.</span>Mendez</a>
+        <div class="nav-links">
+          <a href="../../index.html#about">About</a>
+          <a href="../../index.html#experience">Experience</a>
+          <a href="../../index.html#projects">Projects</a>
           <a href="https://www.linkedin.com/in/jorge-mend" target="_blank" rel="noopener">LinkedIn</a>
           <button class="theme-toggle" id="themeBtn" aria-label="Toggle theme">☾</button>
           <a class="nav-cta" href="mailto:jemiliano.mc@gmail.com">Let's Talk</a>
@@ -1026,333 +646,137 @@
       </div>
     </header>
 
-    <!-- ─── HERO ─── -->
-    <section class="hero">
-      <div class="hero-orb"></div>
-      <div class="hero-content">
-        <div class="hero-badge">Open to Opportunities · May 2026 Grad</div>
-        <h1>
-          <span class="highlight">Jorge Mendez</span>
-        </h1>
-        <p class="hero-tagline">Turning Data Into <span class="tl-accent">Financial Insight</span></p>
-        <p class="hero-sub">Data analyst and researcher blending Python, R, SQL, and Power BI with financial modeling to deliver insights that drive real business decisions. Currently at UH–Downtown with experience across BASF, Blueprint, and Amazon.</p>
-        <div class="hero-actions">
-          <a class="hero-btn filled" href="#projects">View My Work</a>
-          <a class="hero-btn" href="#experience">My Experience</a>
-          <a class="hero-btn" href="mailto:jemiliano.mc@gmail.com">Get in Touch</a>
+    <!-- ─── PROJECT HERO ─── -->
+    <section class="project-hero">
+      <div class="project-hero-inner">
+        <div class="project-hero-text">
+          <a class="hero-back hero-anim ha1" href="../../index.html#projects">← Back to Projects</a>
+          <h1 class="hero-anim ha2">Customer <span class="hl">Churn Analysis</span></h1>
+          <div class="project-meta-row hero-anim ha3">
+            <span class="meta-tag date">Sep 2025</span>
+            <span class="meta-tag">Excel</span>
+            <span class="meta-tag">Pivot Tables</span>
+            <span class="meta-tag">Slicers</span>
+            <span class="meta-tag">KPI Dashboard</span>
+          </div>
+          <p class="desc hero-anim ha4">Explored churn patterns in a telco-style dataset using only Excel. Built an interactive workbook with KPIs, drill-downs, and slicers so a business user can filter by plan, region, and usage to see what drives customer losses — no Power BI or code required.</p>
+          <div class="hero-actions hero-anim ha5">
+            <a class="hero-btn filled" href="report/Customer%20Churn%20Project.xlsx" target="_blank">↓ Download Workbook</a>
+            <a class="hero-btn" href="data/churn_sample.csv" target="_blank">View Data (CSV)</a>
+          </div>
         </div>
-      </div>
-      <div class="scroll-hint">
-        <span>Scroll</span>
-        <div class="scroll-line"></div>
+        <div class="project-hero-figure hero-anim ha3">
+          <img src="images/churn_dashboard.png" alt="Excel churn dashboard with KPIs, slicers, charts">
+        </div>
       </div>
     </section>
 
-    <!-- ─── STATS ─── -->
-    <div class="stats-strip reveal">
-      <div class="stats-inner">
-        <div class="stat-item">
-          <div class="stat-number"><span class="a">3.77</span></div>
-          <div class="stat-label">GPA</div>
+    <!-- ─── CONTENT ─── -->
+    <div class="content-wrap">
+
+      <!-- Sidebar TOC -->
+      <nav class="sidebar">
+        <div class="sidebar-label">On this page</div>
+        <div class="toc">
+          <a href="#dataset">Dataset</a>
+          <a href="#approach">Approach</a>
+          <a href="#insights">Key Insights</a>
+          <a href="#figures">Figures</a>
+          <a href="#files">Files</a>
         </div>
-        <div class="stat-item">
-          <div class="stat-number"><span class="a">3</span>+</div>
-          <div class="stat-label">Analyst Roles</div>
+      </nav>
+
+      <!-- Main -->
+      <div class="main-content">
+
+        <!-- Dataset -->
+        <div class="content-card reveal" id="dataset">
+          <h2><span class="icon">📋</span> Dataset</h2>
+          <ul>
+            <li><strong>Rows:</strong> Customers with demographics, plan features, usage metrics, and churn flag</li>
+            <li><strong>Targets:</strong> Churned vs. retained, churn reason text, churn rate %</li>
+            <li><strong>Prep in Excel:</strong> Cleaned headers, created helper columns (age bands, usage bands), set up tables for pivots</li>
+          </ul>
+          <div class="callout">
+            <span class="callout-icon">💡</span>
+            <span>Everything stays native to Excel so analysts without BI tools can filter and slice the same workbook.</span>
+          </div>
         </div>
-        <div class="stat-item">
-          <div class="stat-number"><span class="a">30%</span></div>
-          <div class="stat-label">Defect Reduction</div>
+
+        <!-- Approach -->
+        <div class="content-card reveal reveal-d1" id="approach">
+          <h2><span class="icon">⚙️</span> Approach</h2>
+          <ul>
+            <li><strong>Pivots:</strong> Churn rate by reason, demographics, age group, state, and data usage bands</li>
+            <li><strong>Visuals:</strong> Bar chart for ranked churn reasons; doughnut charts for competitor vs. other; combo chart for age bands; heatmap for churn by state</li>
+            <li><strong>Interactivity:</strong> Slicers wired to all pivots (e.g., intl plan, device type) so the dashboard responds instantly</li>
+            <li><strong>Formatting:</strong> Data bars and color scales highlight the highest-risk segments</li>
+          </ul>
         </div>
-        <div class="stat-item">
-          <div class="stat-number"><span class="a">5</span></div>
-          <div class="stat-label">Countries Served</div>
+
+        <!-- Key Insights -->
+        <div class="content-card reveal reveal-d2" id="insights">
+          <h2><span class="icon">📊</span> Key Insights</h2>
+          <div class="insight-grid">
+            <div class="insight-item">
+              <div class="insight-label">Top Driver</div>
+              <div class="insight-value">Competitor Offers</div>
+              <div class="insight-desc">Better offers and devices from competitors represent the largest slices of churn</div>
+            </div>
+            <div class="insight-item">
+              <div class="insight-label">Age Pattern</div>
+              <div class="insight-value">59–68+ Risk</div>
+              <div class="insight-desc">Churn rate climbs sharply after the 59–68 age band; price-sensitive segments emerge</div>
+            </div>
+            <div class="insight-item">
+              <div class="insight-label">Geographic</div>
+              <div class="insight-value">State Hotspots</div>
+              <div class="insight-desc">Higher-churn states concentrate in the heatmap's red band, interacting with intl plan</div>
+            </div>
+          </div>
         </div>
+
+        <!-- Figures -->
+        <div id="figures" style="display:flex;flex-direction:column;gap:1.5rem;">
+          <div class="figure-card reveal">
+            <img src="images/churn_dashboard.png" alt="Excel churn dashboard with KPIs, slicers, charts">
+            <div class="figure-caption">
+              <span class="figure-num">Fig 1</span>
+              <p>Interactive Excel dashboard summarizing churn KPIs and segments with slicers for live filtering.</p>
+            </div>
+          </div>
+          <div class="figure-card reveal reveal-d1">
+            <img src="images/churn_pivot_reasons.png" alt="Pivot table and ranked bar chart of churn reasons">
+            <div class="figure-caption">
+              <span class="figure-num">Fig 2</span>
+              <p>Ranked churn reasons from the underlying pivot table — competitor-related factors dominate.</p>
+            </div>
+          </div>
+          <div class="figure-card reveal reveal-d2">
+            <img src="images/churn_competitor_reasons.png" alt="Competitor-related churn reasons breakdown">
+            <div class="figure-caption">
+              <span class="figure-num">Fig 3</span>
+              <p>Competitor category drivers: better devices, better offer, higher download speeds, more data offering.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Files -->
+        <div class="content-card reveal" id="files">
+          <h2><span class="icon">📁</span> Files</h2>
+          <p>Download the original workbook or view the raw data used in this analysis.</p>
+          <div class="download-grid">
+            <a class="dl-btn" href="report/Customer%20Churn%20Project.xlsx" target="_blank">
+              <span class="dl-icon">📊</span> Workbook (XLSX)
+            </a>
+            <a class="dl-btn" href="data/churn_sample.csv" target="_blank">
+              <span class="dl-icon">📄</span> Raw Data (CSV)
+            </a>
+          </div>
+        </div>
+
       </div>
     </div>
-
-    <!-- ─── MARQUEE ─── -->
-    <div class="marquee-strip">
-      <div class="marquee-track">
-        <span class="marquee-item">Python <span class="dot"></span> R <span class="dot"></span> SQL <span class="dot"></span> Power BI <span class="dot"></span> Excel <span class="dot"></span> Alteryx <span class="dot"></span> Snowflake <span class="dot"></span> ETL <span class="dot"></span> Financial Modeling <span class="dot"></span> Bayesian Analysis <span class="dot"></span> Regression <span class="dot"></span> CAPM <span class="dot"></span></span>
-        <span class="marquee-item">Python <span class="dot"></span> R <span class="dot"></span> SQL <span class="dot"></span> Power BI <span class="dot"></span> Excel <span class="dot"></span> Alteryx <span class="dot"></span> Snowflake <span class="dot"></span> ETL <span class="dot"></span> Financial Modeling <span class="dot"></span> Bayesian Analysis <span class="dot"></span> Regression <span class="dot"></span> CAPM <span class="dot"></span></span>
-      </div>
-    </div>
-
-    <!-- ─── ABOUT ─── -->
-    <section class="section" id="about">
-      <div class="section-header reveal">
-        <div>
-          <div class="section-tag">// About</div>
-          <h2 class="section-title">Who I Am</h2>
-        </div>
-        <p class="section-desc">A bilingual data-driven analyst passionate about connecting quantitative methods with real financial decision-making.</p>
-      </div>
-      <div class="about-grid">
-        <div class="about-card about-intro reveal">
-          <div class="text-side">
-            <h3>Data Meets Finance</h3>
-            <p>I'm a double-major in Data Science and Applied Statistics with a finance domain focus and a mathematics minor at the University of Houston–Downtown. I've held analyst roles at UHD Advancement, Purdue's Data Mine with BASF, and Blueprint—each sharpening my ability to turn messy data into clear, stakeholder-ready stories.</p>
-            <p>From forecasting 5-year sales with 20+ years of agricultural data to building Power BI dashboards with weekly refreshes for executives, I thrive wherever data meets real business decisions.</p>
-          </div>
-          <div class="skills-grouped">
-            <div>
-              <div class="skill-group-label">Languages & Tools</div>
-              <div class="skill-group-chips">
-                <span class="skill-chip" data-detail="Pandas, scikit-learn, statsmodels">Python</span>
-                <span class="skill-chip" data-detail="tidyverse, ggplot2, forecast">R</span>
-                <span class="skill-chip" data-detail="Joins, CTEs, window functions">SQL</span>
-                <span class="skill-chip" data-detail="DAX, weekly executive dashboards">Power BI</span>
-                <span class="skill-chip" data-detail="Pivot tables, XLOOKUP, VBA basics">Excel</span>
-                <span class="skill-chip" data-detail="ETL automation & data blending">Alteryx</span>
-                <span class="skill-chip" data-detail="Cloud data warehouse queries">Snowflake</span>
-              </div>
-            </div>
-            <div>
-              <div class="skill-group-label">Techniques</div>
-              <div class="skill-group-chips">
-                <span class="skill-chip" data-detail="Extract, transform, load pipelines">ETL Workflows</span>
-                <span class="skill-chip" data-detail="Cleaning & reshaping raw data">Data Transformation</span>
-                <span class="skill-chip" data-detail="Schema design & normalization">Relational Modeling</span>
-                <span class="skill-chip" data-detail="Linear, logistic, multifactor">Regression</span>
-                <span class="skill-chip" data-detail="Prior/posterior inference">Bayesian Analysis</span>
-              </div>
-            </div>
-            <div>
-              <div class="skill-group-label">Domain Knowledge</div>
-              <div class="skill-group-chips">
-                <span class="skill-chip" data-detail="Real-time metric tracking">KPI Dashboards</span>
-                <span class="skill-chip" data-detail="Budget vs. actual analysis">Variance Analysis</span>
-                <span class="skill-chip" data-detail="AP/AR, forecasting, reporting">Financial Analysis</span>
-                <span class="skill-chip" data-detail="Capital Asset Pricing Model">CAPM</span>
-                <span class="skill-chip" data-detail="Native speaker — bilingual">Spanish (Fluent)</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="about-card reveal reveal-d1">
-          <div class="icon-wrap">📊</div>
-          <h3>Analytical Rigor</h3>
-          <p>From event studies and multifactor models to SMAPE evaluation and feature importance, I approach every problem with methodology rooted in statistical best practices and academic coursework in Bayesian analysis, regression, and quantitative finance.</p>
-        </div>
-        <div class="about-card reveal reveal-d2">
-          <div class="icon-wrap">💡</div>
-          <h3>Business Impact</h3>
-          <p>I don't just crunch numbers—I standardized datasets across 5 countries, automated ETL workflows, reduced defects by 30%, and built dashboards that gave executives near real-time financial visibility. Every analysis points toward a clear recommendation.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- ─── EXPERIENCE ─── -->
-    <section class="section" id="experience">
-      <div class="section-header reveal">
-        <div>
-          <div class="section-tag">// Experience</div>
-          <h2 class="section-title">Where I've Worked</h2>
-        </div>
-        <p class="section-desc">Professional roles spanning analytics consulting, data science research, and operations.</p>
-      </div>
-      <div class="timeline">
-
-        <div class="tl-item reveal">
-          <div class="tl-dot">📈</div>
-          <div class="tl-content">
-            <div class="tl-header">
-              <div>
-                <h3>Data Analyst Consultant</h3>
-                <div class="tl-company">University of Houston–Downtown</div>
-              </div>
-              <span class="tl-date">Dec 2025 – Present</span>
-            </div>
-            <ul>
-              <li>Analyze multi-year donation data across thousands of donors to identify giving patterns and support targeted fundraising</li>
-              <li>Develop interactive Power BI dashboards comparing participation and total giving to support donor segmentation</li>
-              <li>Integrate constituent and transaction data using relational modeling to improve donor accuracy and reporting reliability</li>
-              <li>Partner with UHD Advancement stakeholders to translate analytics into fundraising planning and outreach prioritization</li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="tl-item reveal reveal-d1">
-          <div class="tl-dot">🔬</div>
-          <div class="tl-content">
-            <div class="tl-header">
-              <div>
-                <h3>Undergraduate Data Science Researcher</h3>
-                <div class="tl-company">The Data Mine, Purdue University — BASF Corporation</div>
-              </div>
-              <span class="tl-date">Aug 2024 – Jan 2025</span>
-            </div>
-            <ul>
-              <li>Forecasted five-year sales using over 20 years of agricultural data to support BASF's strategic planning</li>
-              <li>Evaluated model performance against baseline approaches using SMAPE and MAE</li>
-              <li>Identified environmental and economic demand drivers through correlation and feature importance analysis</li>
-              <li>Created visualizations and summaries in Python and R to translate findings into actionable stakeholder recommendations</li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="tl-item reveal reveal-d2">
-          <div class="tl-dot">💼</div>
-          <div class="tl-content">
-            <div class="tl-header">
-              <div>
-                <h3>Data and Business Analyst</h3>
-                <div class="tl-company">Blueprint — Houston, TX</div>
-              </div>
-              <span class="tl-date">Jan 2023 – May 2024</span>
-            </div>
-            <ul>
-              <li>Standardized AP, AR, and inventory datasets across five countries, improving reporting consistency and accuracy</li>
-              <li>Automated ETL workflows using Alteryx and Snowflake to convert messy Excel files into report-ready tables</li>
-              <li>Built Power BI dashboards with weekly refreshes, giving executives near real-time financial and inventory visibility</li>
-              <li>Performed variance analysis and data-integrity checks to resolve discrepancies and inform budgeting and inventory planning</li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="tl-item reveal reveal-d3">
-          <div class="tl-dot">📦</div>
-          <div class="tl-content">
-            <div class="tl-header">
-              <div>
-                <h3>Process Assistant & Quality Assurance</h3>
-                <div class="tl-company">Amazon — Houston, TX</div>
-              </div>
-              <span class="tl-date">Aug 2019 – Nov 2021</span>
-            </div>
-            <ul>
-              <li>Supervised 80+ associates per shift to meet operational KPIs and SLA targets while enforcing safety and compliance</li>
-              <li>Implemented quality control initiatives that reduced order defects by 30% and improved process reliability</li>
-              <li>Led cross-training initiatives to reduce downtime and increase workforce flexibility across shifts</li>
-              <li>Analyzed performance metrics using Excel and internal systems to identify bottlenecks and recommend improvements</li>
-            </ul>
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- ─── EDUCATION ─── -->
-    <section class="section" id="education">
-      <div class="section-header reveal">
-        <div>
-          <div class="section-tag">// Education</div>
-          <h2 class="section-title">Academic Background</h2>
-        </div>
-      </div>
-      <div class="edu-grid">
-        <div class="edu-card reveal">
-          <h3>B.S. Data Science & Applied Statistics</h3>
-          <div class="edu-school">University of Houston–Downtown · Expected May 2026</div>
-          <p class="edu-detail"><strong>Double Major</strong> with Minor in Mathematics · Finance Domain Focus</p>
-          <p class="edu-detail"><strong>GPA:</strong> 3.77 · Dean's List 2023–Present</p>
-          <p class="edu-detail">Scholars Academy — Competitive research and professional development program</p>
-          <div class="edu-badges">
-            <span class="edu-badge highlight">3.77 GPA</span>
-            <span class="edu-badge highlight">Dean's List</span>
-            <span class="edu-badge">Scholars Academy</span>
-            <span class="edu-badge">Finance Focus</span>
-          </div>
-        </div>
-        <div class="edu-card reveal reveal-d1">
-          <h3>Relevant Coursework</h3>
-          <div class="edu-school">Core analytical & finance curriculum</div>
-          <div class="skills-visual" style="margin-top:0.75rem;">
-            <span class="skill-chip">Statistical Inference</span>
-            <span class="skill-chip">Applied Regression</span>
-            <span class="skill-chip">Bayesian Data Analysis</span>
-            <span class="skill-chip">Decision Mathematics</span>
-            <span class="skill-chip">Data Transformation & Curation</span>
-            <span class="skill-chip">Quantitative Methods of Finance</span>
-            <span class="skill-chip">Money Markets & Institutions</span>
-          </div>
-          <div style="margin-top:1.25rem; padding-top:1rem; border-top:1px solid var(--border);">
-            <h3 style="font-size:1rem;margin-bottom:0.3rem;">Leadership</h3>
-            <div class="edu-school">Gamma Iota Sigma · Treasurer · Fall 2025–Present</div>
-            <p class="edu-detail">International Risk Management, Insurance & Actuarial Science Fraternity. Managing chapter budget, tracking expenses, and preparing financial summaries.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ─── PROJECTS ─── -->
-    <section class="section" id="projects">
-      <div class="section-header reveal">
-        <div>
-          <div class="section-tag">// Work</div>
-          <h2 class="section-title">Featured Projects</h2>
-        </div>
-        <p class="section-desc">Case studies where data meets strategy. Click any project for the full deep dive.</p>
-      </div>
-      <div class="projects-grid">
-
-        <article class="project-card featured reveal">
-          <div class="project-thumb">
-            <img src="projects/event_study/images/eventstudy_daily_returns.png" alt="Event Study — Daily Returns">
-            <div class="project-thumb-overlay"></div>
-            <span class="project-tag">Event Study</span>
-          </div>
-          <div>
-            <div class="project-body">
-              <p class="project-date">May 2025</p>
-              <h3>Microsoft × Activision Blizzard — Merger Event Study</h3>
-              <p>Analyzed the stock market reaction to Microsoft's $68.7B acquisition announcement using Yahoo Finance data. Computed cumulative abnormal returns of <strong style="color:var(--accent-mint)">+29%</strong>, validated with t-tests, CAPM, and multifactor models.</p>
-              <div class="project-meta">
-                <span class="meta-chip">Python</span>
-                <span class="meta-chip">CAPM</span>
-                <span class="meta-chip">Multifactor</span>
-                <span class="meta-chip">Yahoo Finance</span>
-              </div>
-            </div>
-            <div class="project-footer">
-              <a class="project-link" href="projects/event_study/index.html">Read Case Study <span class="arrow">→</span></a>
-            </div>
-          </div>
-        </article>
-
-        <article class="project-card reveal reveal-d1">
-          <div class="project-thumb">
-            <img src="projects/churn/images/churn_dashboard.png" alt="Churn Dashboard">
-            <div class="project-thumb-overlay"></div>
-            <span class="project-tag">Excel</span>
-          </div>
-          <div class="project-body">
-            <p class="project-date">Sep 2025</p>
-            <h3>Customer Churn Analysis</h3>
-            <p>Built an interactive Excel dashboard with pivot tables, slicers, and conditional formatting to surface key retention KPIs at a glance.</p>
-            <div class="project-meta">
-              <span class="meta-chip">Excel</span>
-              <span class="meta-chip">Pivot Tables</span>
-              <span class="meta-chip">KPI Dashboard</span>
-            </div>
-          </div>
-          <div class="project-footer">
-            <a class="project-link" href="projects/churn/index.html">View Project <span class="arrow">→</span></a>
-          </div>
-        </article>
-
-        <article class="project-card reveal reveal-d2" style="border-style:dashed;display:flex;align-items:center;justify-content:center;min-height:280px;">
-          <div style="text-align:center;padding:2rem;">
-            <div style="font-size:2.2rem;margin-bottom:0.75rem;opacity:0.25;">+</div>
-            <p style="font-family:var(--font-mono);font-size:0.75rem;letter-spacing:0.05em;text-transform:uppercase;color:var(--text-tertiary);">More projects coming soon</p>
-          </div>
-        </article>
-
-      </div>
-    </section>
-
-    <!-- ─── CONTACT ─── -->
-    <section class="contact-section" id="contact">
-      <div class="contact-inner reveal">
-        <div class="section-tag">// Contact</div>
-        <h2>Let's Build Something<br>Together</h2>
-        <p>I'm graduating May 2026 and open to full-time analyst, data science, and finance roles. Let's connect.</p>
-        <div class="contact-links">
-          <a class="contact-btn primary-contact" href="mailto:jemiliano.mc@gmail.com">✉ Email Me</a>
-          <a class="contact-btn" href="https://www.linkedin.com/in/jorge-mend" target="_blank" rel="noopener">in LinkedIn</a>
-        </div>
-      </div>
-    </section>
 
     <footer class="site-footer">
       <p class="footer-text">© <span id="year"></span> Jorge Mendez <span>·</span> Houston, TX <span>·</span> Built for GitHub Pages</p>
@@ -1384,10 +808,17 @@
       nav.classList.toggle('scrolled', window.scrollY > 60);
     }, { passive: true });
 
-    // Mobile menu
-    document.getElementById('mobileToggle').addEventListener('click', () => {
-      document.getElementById('navLinks').classList.toggle('open');
-    });
+    // TOC highlight
+    const tocLinks = [...document.querySelectorAll('.toc a')];
+    const tocSecs = tocLinks.map(a => document.querySelector(a.getAttribute('href')));
+    function updateToc() {
+      const y = window.scrollY + 140;
+      let active = 0;
+      tocSecs.forEach((s, i) => { if (s && s.offsetTop <= y) active = i; });
+      tocLinks.forEach((a, i) => a.classList.toggle('active', i === active));
+    }
+    window.addEventListener('scroll', updateToc, { passive: true });
+    updateToc();
 
     // Scroll reveal
     const obs = new IntersectionObserver((entries) => {
