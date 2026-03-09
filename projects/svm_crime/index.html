@@ -6,9 +6,6 @@
   <title>Houston Violent Crime Prediction (SVM) | Jorge Mendez</title>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    /* ═══════════════════════════════════════
-       TOKENS
-    ═══════════════════════════════════════ */
     :root {
       --bg-deep: #060810;
       --bg-base: #0a0d14;
@@ -50,606 +47,107 @@
       --border-hover: rgba(0,0,0,0.13);
       --glass: rgba(255, 255, 255, 0.85);
     }
-
-    /* ═══════════════════════════════════════
-       RESET
-    ═══════════════════════════════════════ */
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
     html { scroll-behavior: smooth; }
-    body {
-      font-family: var(--font-body);
-      background: var(--bg-deep);
-      color: var(--text-primary);
-      line-height: 1.65;
-      -webkit-font-smoothing: antialiased;
-      overflow-x: hidden;
-    }
+    body { font-family: var(--font-body); background: var(--bg-deep); color: var(--text-primary); line-height: 1.65; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
     a { color: inherit; text-decoration: none; }
     img { display: block; max-width: 100%; }
-
-    /* ═══════════════════════════════════════
-       AMBIENT EFFECTS
-    ═══════════════════════════════════════ */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background:
-        radial-gradient(ellipse 80% 50% at 50% -20%, rgba(79,140,255,0.07), transparent 70%),
-        radial-gradient(ellipse 60% 40% at 85% 60%, rgba(255,107,74,0.04), transparent 60%),
-        radial-gradient(ellipse 50% 50% at 10% 80%, rgba(52,211,153,0.025), transparent 50%);
-      pointer-events: none;
-      z-index: 0;
-    }
-    body::after {
-      content: '';
-      position: fixed;
-      inset: 0;
-      opacity: 0.022;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-      background-size: 128px;
-      pointer-events: none;
-      z-index: 1;
-    }
+    body::before { content: ''; position: fixed; inset: 0; background: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(79,140,255,0.07), transparent 70%), radial-gradient(ellipse 60% 40% at 85% 60%, rgba(255,107,74,0.04), transparent 60%), radial-gradient(ellipse 50% 50% at 10% 80%, rgba(52,211,153,0.025), transparent 50%); pointer-events: none; z-index: 0; }
+    body::after { content: ''; position: fixed; inset: 0; opacity: 0.022; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); background-size: 128px; pointer-events: none; z-index: 1; }
     .page-wrapper { position: relative; z-index: 2; }
-
-    .grid-bg {
-      position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none;
-    }
-    .grid-bg::before {
-      content: '';
-      position: absolute;
-      inset: -50%;
-      background-image:
-        linear-gradient(var(--border) 1px, transparent 1px),
-        linear-gradient(90deg, var(--border) 1px, transparent 1px);
-      background-size: 60px 60px;
-      animation: gridDrift 30s linear infinite;
-      opacity: 0.35;
-    }
-    @keyframes gridDrift {
-      0% { transform: translate(0,0); }
-      100% { transform: translate(60px,60px); }
-    }
-
-    .cursor-glow {
-      position: fixed;
-      width: 420px; height: 420px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(79,140,255,0.055), transparent 70%);
-      pointer-events: none;
-      z-index: 0;
-      transform: translate(-50%, -50%);
-    }
-
-    /* ═══════════════════════════════════════
-       NAVIGATION
-    ═══════════════════════════════════════ */
-    .site-nav {
-      position: fixed; top: 0; left: 0; right: 0;
-      z-index: 100;
-      padding: 1rem 2rem;
-      transition: all 0.5s var(--ease-out-expo);
-    }
+    .grid-bg { position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
+    .grid-bg::before { content: ''; position: absolute; inset: -50%; background-image: linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px); background-size: 60px 60px; animation: gridDrift 30s linear infinite; opacity: 0.35; }
+    @keyframes gridDrift { 0% { transform: translate(0,0); } 100% { transform: translate(60px,60px); } }
+    .cursor-glow { position: fixed; width: 420px; height: 420px; border-radius: 50%; background: radial-gradient(circle, rgba(79,140,255,0.055), transparent 70%); pointer-events: none; z-index: 0; transform: translate(-50%, -50%); }
+    .site-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1rem 2rem; transition: all 0.5s var(--ease-out-expo); }
     .site-nav.scrolled { padding: 0.6rem 2rem; }
-    .nav-inner {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0.7rem 1.2rem;
-      background: var(--glass);
-      backdrop-filter: blur(20px) saturate(180%);
-      -webkit-backdrop-filter: blur(20px) saturate(180%);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      transition: all 0.5s var(--ease-out-expo);
-    }
-    .site-nav.scrolled .nav-inner {
-      border-radius: 60px;
-      padding: 0.5rem 1.4rem;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-    }
-    .nav-brand {
-      font-family: var(--font-display);
-      font-weight: 800;
-      font-size: 1.1rem;
-    }
+    .nav-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 0.7rem 1.2rem; background: var(--glass); backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%); border: 1px solid var(--border); border-radius: 16px; transition: all 0.5s var(--ease-out-expo); }
+    .site-nav.scrolled .nav-inner { border-radius: 60px; padding: 0.5rem 1.4rem; box-shadow: 0 8px 32px rgba(0,0,0,0.3); }
+    .nav-brand { font-family: var(--font-display); font-weight: 800; font-size: 1.1rem; }
     .nav-brand span { color: var(--accent); }
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 0.2rem;
-    }
-    .nav-links a, .nav-links button {
-      font-family: var(--font-mono);
-      font-size: 0.7rem;
-      letter-spacing: 0.03em;
-      text-transform: uppercase;
-      padding: 0.45rem 0.9rem;
-      border-radius: 10px;
-      border: none;
-      background: transparent;
-      color: var(--text-secondary);
-      cursor: pointer;
-      transition: all 0.25s ease;
-    }
-    .nav-links a:hover, .nav-links button:hover {
-      color: var(--text-primary);
-      background: var(--accent-glow);
-    }
-    .nav-cta {
-      background: linear-gradient(135deg, var(--accent), #6366f1) !important;
-      color: #fff !important;
-      padding: 0.45rem 1.1rem !important;
-      font-weight: 600 !important;
-      box-shadow: 0 4px 18px rgba(79,140,255,0.25);
-    }
-    .theme-toggle {
-      width: 2rem; height: 2rem;
-      display: inline-flex; align-items: center; justify-content: center;
-      font-size: 1rem;
-      border-radius: 8px;
-      padding: 0 !important;
-    }
-
-    /* ═══════════════════════════════════════
-       PROJECT HERO
-    ═══════════════════════════════════════ */
-    .project-hero {
-      padding: 9rem 2rem 3rem;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-    .project-hero-inner {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 3rem;
-      align-items: center;
-    }
-    .hero-back {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      font-family: var(--font-mono);
-      font-size: 0.7rem;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 1.5rem;
-      padding: 0.4rem 0.9rem;
-      border: 1px solid rgba(79,140,255,0.3);
-      border-radius: 60px;
-      transition: all 0.3s ease;
-    }
-    .hero-back:hover {
-      background: var(--accent-glow);
-      border-color: var(--accent);
-    }
-    .project-hero-text h1 {
-      font-family: var(--font-display);
-      font-weight: 900;
-      font-size: clamp(2rem, 4.5vw, 2.8rem);
-      line-height: 1.1;
-      letter-spacing: -0.035em;
-      margin-bottom: 1rem;
-    }
-    .project-hero-text h1 .hl {
-      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-purple) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    .project-meta-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      margin-bottom: 1.2rem;
-    }
-    .meta-tag {
-      font-family: var(--font-mono);
-      font-size: 0.65rem;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      padding: 0.35rem 0.75rem;
-      border-radius: 8px;
-      border: 1px solid var(--accent);
-      color: var(--accent);
-    }
-    .project-hero-text .desc {
-      color: var(--text-secondary);
-      font-size: 1.02rem;
-      line-height: 1.75;
-      max-width: 520px;
-    }
-    .hero-actions {
-      display: flex;
-      gap: 0.7rem;
-      margin-top: 1.5rem;
-      flex-wrap: wrap;
-    }
-    .hero-btn {
-      font-family: var(--font-mono);
-      font-size: 0.72rem;
-      font-weight: 600;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      padding: 0.7rem 1.4rem;
-      border-radius: 12px;
-      border: 1px solid var(--border);
-      background: var(--bg-surface);
-      color: var(--text-primary);
-      cursor: pointer;
-      transition: all 0.3s var(--ease-out-expo);
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-    }
-    .hero-btn:hover {
-      border-color: var(--accent);
-      transform: translateY(-2px);
-      box-shadow: 0 6px 24px rgba(79,140,255,0.15);
-    }
-    .hero-btn.filled {
-      background: linear-gradient(135deg, var(--accent), #6366f1);
-      border-color: transparent;
-      color: #fff;
-      box-shadow: 0 4px 18px rgba(79,140,255,0.3);
-    }
-    .project-hero-figure {
-      border-radius: var(--radius-lg);
-      overflow: hidden;
-      border: 1px solid var(--border);
-      box-shadow: 0 24px 60px rgba(0,0,0,0.3);
-      transition: all 0.5s var(--ease-out-expo);
-    }
-    .project-hero-figure:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 32px 80px rgba(0,0,0,0.4);
-    }
+    .nav-links { display: flex; align-items: center; gap: 0.2rem; }
+    .nav-links a, .nav-links button { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.03em; text-transform: uppercase; padding: 0.45rem 0.9rem; border-radius: 10px; border: none; background: transparent; color: var(--text-secondary); cursor: pointer; transition: all 0.25s ease; }
+    .nav-links a:hover, .nav-links button:hover { color: var(--text-primary); background: var(--accent-glow); }
+    .nav-cta { background: linear-gradient(135deg, var(--accent), #6366f1) !important; color: #fff !important; padding: 0.45rem 1.1rem !important; font-weight: 600 !important; box-shadow: 0 4px 18px rgba(79,140,255,0.25); }
+    .theme-toggle { width: 2rem; height: 2rem; display: inline-flex; align-items: center; justify-content: center; font-size: 1rem; border-radius: 8px; padding: 0 !important; }
+    .project-hero { padding: 9rem 2rem 3rem; max-width: 1200px; margin: 0 auto; }
+    .project-hero-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
+    .hero-back { display: inline-flex; align-items: center; gap: 0.4rem; font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.05em; text-transform: uppercase; color: var(--accent); margin-bottom: 1.5rem; padding: 0.4rem 0.9rem; border: 1px solid rgba(79,140,255,0.3); border-radius: 60px; transition: all 0.3s ease; }
+    .hero-back:hover { background: var(--accent-glow); border-color: var(--accent); }
+    .project-hero-text h1 { font-family: var(--font-display); font-weight: 900; font-size: clamp(2rem, 4.5vw, 2.8rem); line-height: 1.1; letter-spacing: -0.035em; margin-bottom: 1rem; }
+    .project-hero-text h1 .hl { background: linear-gradient(135deg, var(--accent) 0%, var(--accent-purple) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .project-meta-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.2rem; }
+    .meta-tag { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.04em; text-transform: uppercase; padding: 0.35rem 0.75rem; border-radius: 8px; border: 1px solid var(--accent); color: var(--accent); }
+    .project-hero-text .desc { color: var(--text-secondary); font-size: 1.02rem; line-height: 1.75; max-width: 520px; }
+    .hero-actions { display: flex; gap: 0.7rem; margin-top: 1.5rem; flex-wrap: wrap; }
+    .hero-btn { font-family: var(--font-mono); font-size: 0.72rem; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; padding: 0.7rem 1.4rem; border-radius: 12px; border: 1px solid var(--border); background: var(--bg-surface); color: var(--text-primary); cursor: pointer; transition: all 0.3s var(--ease-out-expo); display: inline-flex; align-items: center; gap: 0.4rem; }
+    .hero-btn:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: 0 6px 24px rgba(79,140,255,0.15); }
+    .hero-btn.filled { background: linear-gradient(135deg, var(--accent), #6366f1); border-color: transparent; color: #fff; box-shadow: 0 4px 18px rgba(79,140,255,0.3); }
+    .project-hero-figure { border-radius: var(--radius-lg); overflow: hidden; border: 1px solid var(--border); box-shadow: 0 24px 60px rgba(0,0,0,0.3); transition: all 0.5s var(--ease-out-expo); }
+    .project-hero-figure:hover { transform: translateY(-4px); box-shadow: 0 32px 80px rgba(0,0,0,0.4); }
     .project-hero-figure img { width: 100%; display: block; }
-
-    @media(max-width:768px) {
-      .project-hero-inner { grid-template-columns: 1fr; gap: 2rem; }
-    }
-
-    /* ═══════════════════════════════════════
-       KEY STATS
-    ═══════════════════════════════════════ */
-    .stat-strip {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 2rem 2rem;
-    }
-    .stat-row {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 1px;
-      background: var(--border);
-      border-radius: var(--radius-lg);
-      overflow: hidden;
-    }
-    .stat-card {
-      background: var(--bg-surface);
-      padding: 1.5rem 1rem;
-      text-align: center;
-      transition: all 0.3s ease;
-    }
+    @media(max-width:768px) { .project-hero-inner { grid-template-columns: 1fr; gap: 2rem; } }
+    .stat-strip { max-width: 1200px; margin: 0 auto; padding: 0 2rem 2rem; }
+    .stat-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border); border-radius: var(--radius-lg); overflow: hidden; }
+    .stat-card { background: var(--bg-surface); padding: 1.5rem 1rem; text-align: center; transition: all 0.3s ease; }
     .stat-card:hover { background: var(--bg-elevated); }
-    .stat-value {
-      font-family: var(--font-display);
-      font-weight: 900;
-      font-size: clamp(1.3rem, 2.5vw, 1.7rem);
-      letter-spacing: -0.02em;
-    }
+    .stat-value { font-family: var(--font-display); font-weight: 900; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: -0.02em; }
     .stat-value.blue { color: var(--accent); }
     .stat-value.warm { color: var(--accent-warm); }
     .stat-value.mint { color: var(--accent-mint); }
     .stat-value.purple { color: var(--accent-purple); }
-    .stat-label {
-      font-family: var(--font-mono);
-      font-size: 0.58rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--text-tertiary);
-      margin-top: 0.3rem;
-    }
-    @media(max-width:640px) {
-      .stat-row { grid-template-columns: repeat(2,1fr); }
-    }
-
-    /* ═══════════════════════════════════════
-       CONTENT LAYOUT
-    ═══════════════════════════════════════ */
-    .content-wrap {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 2rem 5rem;
-      display: grid;
-      grid-template-columns: 200px 1fr;
-      gap: 2.5rem;
-    }
-    .sidebar {
-      position: sticky;
-      top: 6rem;
-      align-self: start;
-    }
-    .sidebar-label {
-      font-family: var(--font-mono);
-      font-size: 0.6rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--text-tertiary);
-      margin-bottom: 0.75rem;
-    }
-    .toc a {
-      display: block;
-      font-family: var(--font-mono);
-      font-size: 0.72rem;
-      color: var(--text-tertiary);
-      padding: 0.45rem 0.8rem;
-      border-left: 2px solid var(--border);
-      margin-bottom: 0.15rem;
-      transition: all 0.25s ease;
-    }
-    .toc a:hover {
-      color: var(--text-primary);
-      border-color: var(--border-hover);
-      background: var(--accent-glow);
-      border-radius: 0 8px 8px 0;
-    }
-    .toc a.active {
-      color: var(--accent);
-      border-color: var(--accent);
-    }
-    @media(max-width:900px) {
-      .content-wrap { grid-template-columns: 1fr; }
-      .sidebar { display: none; }
-    }
-
-    .main-content {
-      display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
-    }
-    .content-card {
-      background: var(--bg-surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 2rem;
-      transition: all 0.4s var(--ease-out-expo);
-    }
-    .content-card:hover {
-      border-color: var(--border-hover);
-      box-shadow: 0 12px 36px rgba(0,0,0,0.15);
-    }
-    .content-card h2 {
-      font-family: var(--font-display);
-      font-weight: 800;
-      font-size: 1.35rem;
-      letter-spacing: -0.02em;
-      margin-bottom: 1rem;
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-    }
-    .content-card h2 .icon {
-      width: 36px; height: 36px;
-      border-radius: 10px;
-      background: var(--accent-glow);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1rem;
-      flex-shrink: 0;
-    }
-    .content-card p, .content-card li {
-      color: var(--text-secondary);
-      font-size: 0.93rem;
-      line-height: 1.75;
-    }
+    .stat-label { font-family: var(--font-mono); font-size: 0.58rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-tertiary); margin-top: 0.3rem; }
+    @media(max-width:640px) { .stat-row { grid-template-columns: repeat(2,1fr); } }
+    .content-wrap { max-width: 1200px; margin: 0 auto; padding: 0 2rem 5rem; display: grid; grid-template-columns: 200px 1fr; gap: 2.5rem; }
+    .sidebar { position: sticky; top: 6rem; align-self: start; }
+    .sidebar-label { font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-tertiary); margin-bottom: 0.75rem; }
+    .toc a { display: block; font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-tertiary); padding: 0.45rem 0.8rem; border-left: 2px solid var(--border); margin-bottom: 0.15rem; transition: all 0.25s ease; }
+    .toc a:hover { color: var(--text-primary); border-color: var(--border-hover); background: var(--accent-glow); border-radius: 0 8px 8px 0; }
+    .toc a.active { color: var(--accent); border-color: var(--accent); }
+    @media(max-width:900px) { .content-wrap { grid-template-columns: 1fr; } .sidebar { display: none; } }
+    .main-content { display: flex; flex-direction: column; gap: 1.5rem; }
+    .content-card { background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 2rem; transition: all 0.4s var(--ease-out-expo); }
+    .content-card:hover { border-color: var(--border-hover); box-shadow: 0 12px 36px rgba(0,0,0,0.15); }
+    .content-card h2 { font-family: var(--font-display); font-weight: 800; font-size: 1.35rem; letter-spacing: -0.02em; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.6rem; }
+    .content-card h2 .icon { width: 36px; height: 36px; border-radius: 10px; background: var(--accent-glow); display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
+    .content-card p, .content-card li { color: var(--text-secondary); font-size: 0.93rem; line-height: 1.75; }
     .content-card ul { list-style: none; padding: 0; }
-    .content-card li {
-      padding: 0.3rem 0 0.3rem 1.2rem;
-      position: relative;
-    }
-    .content-card li::before {
-      content: '▸';
-      position: absolute;
-      left: 0;
-      color: var(--accent);
-      font-size: 0.8rem;
-    }
+    .content-card li { padding: 0.3rem 0 0.3rem 1.2rem; position: relative; }
+    .content-card li::before { content: '\25B8'; position: absolute; left: 0; color: var(--accent); font-size: 0.8rem; }
     .content-card li strong { color: var(--text-primary); font-weight: 600; }
-
-    /* Formula */
-    .formula {
-      background: var(--bg-elevated);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      padding: 1rem 1.3rem;
-      margin: 0.8rem 0;
-      font-family: var(--font-mono);
-      font-size: 0.82rem;
-      color: var(--text-secondary);
-      overflow-x: auto;
-    }
+    .formula { background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 1rem 1.3rem; margin: 0.8rem 0; font-family: var(--font-mono); font-size: 0.82rem; color: var(--text-secondary); overflow-x: auto; }
     .formula .var { color: var(--accent); font-weight: 600; }
     .formula .op { color: var(--text-tertiary); }
-
-    /* Callout */
-    .callout {
-      background: var(--accent-glow);
-      border: 1px solid rgba(79,140,255,0.2);
-      border-radius: var(--radius-sm);
-      padding: 0.9rem 1.1rem;
-      margin-top: 0.75rem;
-      font-size: 0.88rem;
-      color: var(--text-secondary);
-      display: flex;
-      align-items: flex-start;
-      gap: 0.6rem;
-    }
+    .callout { background: var(--accent-glow); border: 1px solid rgba(79,140,255,0.2); border-radius: var(--radius-sm); padding: 0.9rem 1.1rem; margin-top: 0.75rem; font-size: 0.88rem; color: var(--text-secondary); display: flex; align-items: flex-start; gap: 0.6rem; }
     .callout-icon { color: var(--accent); font-size: 1rem; flex-shrink: 0; margin-top: 0.1rem; }
-
-    /* Warning/limitation callout */
-    .callout-warn {
-      background: rgba(255,107,74,0.08);
-      border: 1px solid rgba(255,107,74,0.2);
-      border-radius: var(--radius-sm);
-      padding: 0.9rem 1.1rem;
-      margin-top: 0.75rem;
-      font-size: 0.88rem;
-      color: var(--text-secondary);
-      display: flex;
-      align-items: flex-start;
-      gap: 0.6rem;
-    }
+    .callout-warn { background: rgba(255,107,74,0.08); border: 1px solid rgba(255,107,74,0.2); border-radius: var(--radius-sm); padding: 0.9rem 1.1rem; margin-top: 0.75rem; font-size: 0.88rem; color: var(--text-secondary); display: flex; align-items: flex-start; gap: 0.6rem; }
     .callout-warn .callout-icon { color: var(--accent-warm); }
-
-    /* NIBRS table */
-    .nibrs-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin: 0.8rem 0;
-      font-size: 0.88rem;
-    }
-    .nibrs-table th {
-      font-family: var(--font-mono);
-      font-size: 0.65rem;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: var(--text-tertiary);
-      text-align: left;
-      padding: 0.6rem 0.8rem;
-      border-bottom: 2px solid var(--border);
-    }
-    .nibrs-table td {
-      color: var(--text-secondary);
-      padding: 0.55rem 0.8rem;
-      border-bottom: 1px solid var(--border);
-    }
-    .nibrs-table .code {
-      font-family: var(--font-mono);
-      color: var(--accent);
-      font-weight: 600;
-    }
-
-    /* Figures */
-    .figure-card {
-      background: var(--bg-surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      overflow: hidden;
-      transition: all 0.4s var(--ease-out-expo);
-    }
-    .figure-card:hover {
-      border-color: var(--border-hover);
-      box-shadow: 0 16px 48px rgba(0,0,0,0.2);
-    }
+    .nibrs-table { width: 100%; border-collapse: collapse; margin: 0.8rem 0; font-size: 0.88rem; }
+    .nibrs-table th { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-tertiary); text-align: left; padding: 0.6rem 0.8rem; border-bottom: 2px solid var(--border); }
+    .nibrs-table td { color: var(--text-secondary); padding: 0.55rem 0.8rem; border-bottom: 1px solid var(--border); }
+    .nibrs-table .code { font-family: var(--font-mono); color: var(--accent); font-weight: 600; }
+    .figure-card { background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; transition: all 0.4s var(--ease-out-expo); }
+    .figure-card:hover { border-color: var(--border-hover); box-shadow: 0 16px 48px rgba(0,0,0,0.2); }
     .figure-card img { width: 100%; display: block; }
-    .figure-caption {
-      padding: 1rem 1.5rem;
-      border-top: 1px solid var(--border);
-      display: flex;
-      align-items: flex-start;
-      gap: 0.6rem;
-    }
-    .figure-num {
-      font-family: var(--font-mono);
-      font-size: 0.65rem;
-      font-weight: 700;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      color: var(--accent);
-      padding: 0.2rem 0.5rem;
-      background: var(--accent-glow);
-      border-radius: 6px;
-      white-space: nowrap;
-      flex-shrink: 0;
-    }
-    .figure-caption p {
-      color: var(--text-secondary);
-      font-size: 0.88rem;
-      line-height: 1.6;
-    }
-    .figures-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1.5rem;
-    }
-    @media(max-width:700px) {
-      .figures-grid { grid-template-columns: 1fr; }
-    }
-
-    /* Downloads */
-    .download-grid {
-      display: flex;
-      gap: 0.8rem;
-      flex-wrap: wrap;
-      margin-top: 0.5rem;
-    }
-    .dl-btn {
-      font-family: var(--font-mono);
-      font-size: 0.72rem;
-      font-weight: 600;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      padding: 0.75rem 1.3rem;
-      border-radius: 12px;
-      border: 1px solid var(--border);
-      background: var(--bg-elevated);
-      color: var(--text-primary);
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      transition: all 0.3s var(--ease-out-expo);
-    }
-    .dl-btn:hover {
-      border-color: var(--accent);
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(79,140,255,0.15);
-      color: var(--accent);
-    }
+    .figure-caption { padding: 1rem 1.5rem; border-top: 1px solid var(--border); display: flex; align-items: flex-start; gap: 0.6rem; }
+    .figure-num { font-family: var(--font-mono); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--accent); padding: 0.2rem 0.5rem; background: var(--accent-glow); border-radius: 6px; white-space: nowrap; flex-shrink: 0; }
+    .figure-caption p { color: var(--text-secondary); font-size: 0.88rem; line-height: 1.6; }
+    .figures-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+    @media(max-width:700px) { .figures-grid { grid-template-columns: 1fr; } }
+    .download-grid { display: flex; gap: 0.8rem; flex-wrap: wrap; margin-top: 0.5rem; }
+    .dl-btn { font-family: var(--font-mono); font-size: 0.72rem; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; padding: 0.75rem 1.3rem; border-radius: 12px; border: 1px solid var(--border); background: var(--bg-elevated); color: var(--text-primary); display: inline-flex; align-items: center; gap: 0.5rem; transition: all 0.3s var(--ease-out-expo); }
+    .dl-btn:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(79,140,255,0.15); color: var(--accent); }
     .dl-icon { font-size: 1.05rem; }
-
-    /* ═══════════════════════════════════════
-       FOOTER
-    ═══════════════════════════════════════ */
-    .site-footer {
-      padding: 2rem;
-      text-align: center;
-      border-top: 1px solid var(--border);
-      margin-top: 2rem;
-    }
-    .footer-text {
-      font-family: var(--font-mono);
-      font-size: 0.68rem;
-      letter-spacing: 0.05em;
-      color: var(--text-tertiary);
-    }
+    .site-footer { padding: 2rem; text-align: center; border-top: 1px solid var(--border); margin-top: 2rem; }
+    .footer-text { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.05em; color: var(--text-tertiary); }
     .footer-text span { color: var(--accent); }
-
-    /* ═══════════════════════════════════════
-       ANIMATIONS
-    ═══════════════════════════════════════ */
-    @keyframes fadeUp {
-      from { opacity:0; transform:translateY(30px); }
-      to { opacity:1; transform:translateY(0); }
-    }
-    .reveal {
-      opacity: 0;
-      transform: translateY(35px);
-      transition: all 0.7s var(--ease-out-expo);
-    }
+    @keyframes fadeUp { from { opacity:0; transform:translateY(30px); } to { opacity:1; transform:translateY(0); } }
+    .reveal { opacity: 0; transform: translateY(35px); transition: all 0.7s var(--ease-out-expo); }
     .reveal.visible { opacity: 1; transform: translateY(0); }
     .reveal-d1 { transition-delay: 0.1s; }
     .reveal-d2 { transition-delay: 0.2s; }
     .reveal-d3 { transition-delay: 0.3s; }
-
-    .hero-anim {
-      opacity: 0;
-      animation: fadeUp 0.8s var(--ease-out-expo) forwards;
-    }
+    .hero-anim { opacity: 0; animation: fadeUp 0.8s var(--ease-out-expo) forwards; }
     .ha1 { animation-delay: 0.1s; }
     .ha2 { animation-delay: 0.25s; }
     .ha3 { animation-delay: 0.4s; }
@@ -658,13 +156,10 @@
   </style>
 </head>
 <body>
-
   <div class="grid-bg"></div>
   <div class="cursor-glow" id="cursorGlow"></div>
-
   <div class="page-wrapper">
 
-    <!-- ─── NAV ─── -->
     <header class="site-nav" id="siteNav">
       <div class="nav-inner">
         <a href="../../index.html" class="nav-brand">J<span>.</span>Mendez</a>
@@ -673,17 +168,16 @@
           <a href="../../index.html#experience">Experience</a>
           <a href="../../index.html#projects">Projects</a>
           <a href="https://www.linkedin.com/in/jorge-mend" target="_blank" rel="noopener">LinkedIn</a>
-          <button class="theme-toggle" id="themeBtn" aria-label="Toggle theme">☾</button>
+          <button class="theme-toggle" id="themeBtn" aria-label="Toggle theme"></button>
           <a class="nav-cta" href="mailto:jemiliano.mc@gmail.com">Let's Talk</a>
         </div>
       </div>
     </header>
 
-    <!-- ─── PROJECT HERO ─── -->
     <section class="project-hero">
       <div class="project-hero-inner">
         <div class="project-hero-text">
-          <a class="hero-back hero-anim ha1" href="../../index.html#projects">← Back to Projects</a>
+          <a class="hero-back hero-anim ha1" href="../../index.html#projects">&larr; Back to Projects</a>
           <h1 class="hero-anim ha2">Houston Violent Crime<br><span class="hl">Prediction with SVM</span></h1>
           <div class="project-meta-row hero-anim ha3">
             <span class="meta-tag">Fall 2025</span>
@@ -694,46 +188,31 @@
           </div>
           <p class="desc hero-anim ha4">Built a Support Vector Machine classifier with an RBF kernel to predict whether a reported Houston crime will be violent or non-violent, using 250K+ incidents from the Houston Police Department's 2024 NIBRS dataset. Engineered temporal, spatial, and contextual features across 335 input dimensions.</p>
           <div class="hero-actions hero-anim ha5">
-            <a class="hero-btn filled" href="notebooks/SVM_Method.ipynb" target="_blank">↓ Notebook (ipynb)</a>
+            <a class="hero-btn filled" href="notebooks/SVM_Method.ipynb" target="_blank">&darr; Notebook (ipynb)</a>
             <a class="hero-btn" href="data/NIBRSPublicView2024.csv" target="_blank">View Data (CSV)</a>
           </div>
         </div>
         <div class="project-hero-figure hero-anim ha3">
-          <img src="images/svm_confusion_matrix.png" alt="SVM Confusion Matrix — Violent vs Non-Violent">
+          <img src="images/svm_confusion_matrix.png" alt="SVM Confusion Matrix">
         </div>
       </div>
     </section>
 
-    <!-- ─── KEY STATS ─── -->
     <div class="stat-strip reveal">
       <div class="stat-row">
-        <div class="stat-card">
-          <div class="stat-value blue">250K+</div>
-          <div class="stat-label">Incidents Analyzed</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-value purple">335</div>
-          <div class="stat-label">Input Features</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-value mint">61%</div>
-          <div class="stat-label">Violent Crime Recall</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-value warm">0.63</div>
-          <div class="stat-label">ROC AUC</div>
-        </div>
+        <div class="stat-card"><div class="stat-value blue">250K+</div><div class="stat-label">Incidents Analyzed</div></div>
+        <div class="stat-card"><div class="stat-value purple">335</div><div class="stat-label">Input Features</div></div>
+        <div class="stat-card"><div class="stat-value mint">61%</div><div class="stat-label">Violent Crime Recall</div></div>
+        <div class="stat-card"><div class="stat-value warm">0.63</div><div class="stat-label">ROC AUC</div></div>
       </div>
     </div>
 
-    <!-- ─── CONTENT ─── -->
     <div class="content-wrap">
-
       <nav class="sidebar">
         <div class="sidebar-label">On this page</div>
         <div class="toc">
           <a href="#overview">Overview</a>
-          <a href="#data">Data & Target</a>
+          <a href="#data">Data &amp; Target</a>
           <a href="#features">Feature Engineering</a>
           <a href="#model">Model</a>
           <a href="#results">Results</a>
@@ -745,26 +224,22 @@
 
       <div class="main-content">
 
-        <!-- Overview -->
         <div class="content-card reveal" id="overview">
-          <h2><span class="icon">🎯</span> Overview</h2>
+          <h2><span class="icon">&#127919;</span> Overview</h2>
           <p>Can we predict whether a reported crime in Houston will be violent or non-violent based on when, where, and in what context it occurs? This project uses a Support Vector Machine with an RBF kernel to classify incidents from the Houston Police Department's 2024 NIBRS public dataset. The goal is to explore whether temporal patterns (hour, day, month), geographic location (latitude, longitude), and contextual factors (premise type, police beat, ZIP code) carry enough signal to separate violent from non-violent offenses.</p>
           <div class="callout">
-            <span class="callout-icon">💡</span>
+            <span class="callout-icon">&#128161;</span>
             <span>This was developed as part of my coursework, using methodology from ISLP Chapter 9 (Support Vector Machines) with real Houston crime data.</span>
           </div>
         </div>
 
-        <!-- Data & Target -->
         <div class="content-card reveal reveal-d1" id="data">
-          <h2><span class="icon">📋</span> Data & Target Variable</h2>
+          <h2><span class="icon">&#128203;</span> Data &amp; Target Variable</h2>
           <p>The dataset contains over 250,000 incidents from Houston's NIBRS reporting system. The binary target classifies each incident as Violent (1) or Non-Violent (0) based on four strict NIBRS codes consistent with the UCR definition of violent crime:</p>
           <table class="nibrs-table">
-            <thead>
-              <tr><th>NIBRS Code</th><th>Offense Type</th></tr>
-            </thead>
+            <thead><tr><th>NIBRS Code</th><th>Offense Type</th></tr></thead>
             <tbody>
-              <tr><td class="code">09A</td><td>Murder & Non-Negligent Manslaughter</td></tr>
+              <tr><td class="code">09A</td><td>Murder &amp; Non-Negligent Manslaughter</td></tr>
               <tr><td class="code">11A</td><td>Forcible Rape</td></tr>
               <tr><td class="code">120</td><td>Robbery</td></tr>
               <tr><td class="code">13A</td><td>Aggravated Assault</td></tr>
@@ -776,123 +251,113 @@
             <li><strong>Split:</strong> 75% train / 25% test with stratification</li>
           </ul>
           <div class="callout-warn">
-            <span class="callout-icon">⚠️</span>
-            <span>The strong 90/10 class imbalance is a key challenge — the model uses <code style="color:var(--accent);font-family:var(--font-mono);font-size:0.85rem;">class_weight="balanced"</code> to prevent ignoring the minority violent class.</span>
+            <span class="callout-icon">&#9888;&#65039;</span>
+            <span>The strong 90/10 class imbalance is a key challenge &mdash; the model uses <code style="color:var(--accent);font-family:var(--font-mono);font-size:0.85rem;">class_weight="balanced"</code> to prevent ignoring the minority violent class.</span>
           </div>
         </div>
 
-        <!-- Feature Engineering -->
         <div class="content-card reveal reveal-d2" id="features">
-          <h2><span class="icon">⚙️</span> Feature Engineering</h2>
+          <h2><span class="icon">&#9881;&#65039;</span> Feature Engineering</h2>
           <p>Raw incident records were transformed into model-ready features:</p>
           <ul>
             <li><strong>Cyclic time encoding:</strong> Hour of day converted to sin/cos components so 23:00 and 00:00 are neighbors on the circle</li>
             <li><strong>Calendar features:</strong> Month and day-of-week extracted from occurrence date</li>
             <li><strong>Spatial:</strong> Raw MapLongitude and MapLatitude coordinates</li>
-            <li><strong>Context:</strong> Premise type, police Beat, and ZIPCode — one-hot encoded</li>
+            <li><strong>Context:</strong> Premise type, police Beat, and ZIPCode &mdash; one-hot encoded</li>
             <li><strong>Result:</strong> 335 total input columns (44 Premise + 124 Beat + 160 ZIPCode + numeric features)</li>
           </ul>
           <div class="callout">
-            <span class="callout-icon">📐</span>
-            <span>All numeric features are standardized (zero mean, unit variance) before fitting — essential for SVM since the kernel measures distances between observations.</span>
+            <span class="callout-icon">&#128208;</span>
+            <span>All numeric features are standardized (zero mean, unit variance) before fitting &mdash; essential for SVM since the kernel measures distances between observations.</span>
           </div>
         </div>
 
-        <!-- Model -->
         <div class="content-card reveal" id="model">
-          <h2><span class="icon">🤖</span> Model: SVM with RBF Kernel</h2>
+          <h2><span class="icon">&#129302;</span> Model: SVM with RBF Kernel</h2>
           <p>We use a Support Vector Machine with a Radial Basis Function (RBF) kernel, which maps observations into a higher-dimensional space where non-linear patterns become linearly separable.</p>
           <ul>
-            <li><strong>Kernel:</strong> RBF — learns curved, flexible decision boundaries</li>
+            <li><strong>Kernel:</strong> RBF &mdash; learns curved, flexible decision boundaries</li>
             <li><strong>C = 10:</strong> Regularization parameter controlling margin softness</li>
-            <li><strong>γ = "scale":</strong> Kernel bandwidth set automatically based on feature variance</li>
+            <li><strong>&#947; = "scale":</strong> Kernel bandwidth set automatically based on feature variance</li>
             <li><strong>class_weight = "balanced":</strong> Upweights the minority violent class</li>
           </ul>
-
           <div class="formula">
             <strong>Decision boundary:</strong>&nbsp;
-            <span class="var">w₁x₁</span> <span class="op">+</span>
-            <span class="var">w₂x₂</span> <span class="op">+</span>
-            <span class="op">⋯ +</span>
-            <span class="var">w₃₃₅x₃₃₅</span> <span class="op">+</span>
+            <span class="var">w&#8321;x&#8321;</span> <span class="op">+</span>
+            <span class="var">w&#8322;x&#8322;</span> <span class="op">+</span>
+            <span class="op">&#8943; +</span>
+            <span class="var">w&#8323;&#8323;&#8325;x&#8323;&#8323;&#8325;</span> <span class="op">+</span>
             <span class="var">b</span> <span class="op">= 0</span>
           </div>
-
-          <p style="margin-top:0.6rem;">If the value is positive → predict Violent. If negative → predict Non-Violent. Even with an RBF kernel, this linear boundary exists in the high-dimensional feature space created by the kernel transformation.</p>
-
+          <p style="margin-top:0.6rem;">If the value is positive &rarr; predict Violent. If negative &rarr; predict Non-Violent. Even with an RBF kernel, this linear boundary exists in the high-dimensional feature space created by the kernel transformation.</p>
           <div class="callout-warn">
-            <span class="callout-icon">⏱️</span>
-            <span>RBF SVM is O(n²) in training. With 250K+ records, training on the full dataset was impractical. A stratified sample of 50,000 records (balanced between classes) was used instead.</span>
+            <span class="callout-icon">&#9201;&#65039;</span>
+            <span>RBF SVM is O(n&sup2;) in training. With 250K+ records, training on the full dataset was impractical. A stratified sample of 50,000 records (balanced between classes) was used instead.</span>
           </div>
         </div>
 
-        <!-- Results -->
         <div class="content-card reveal" id="results">
-          <h2><span class="icon">📊</span> Results</h2>
+          <h2><span class="icon">&#128202;</span> Results</h2>
           <p>The model was evaluated on the held-out test set of 62,543 observations:</p>
           <ul>
             <li><strong>Accuracy:</strong> 58.5% overall</li>
-            <li><strong>ROC AUC:</strong> 0.63 — moderate discriminative ability</li>
-            <li><strong>Violent crime precision:</strong> ~14% — many false positives</li>
-            <li><strong>Violent crime recall:</strong> ~61% — catches more than half of actual violent incidents</li>
+            <li><strong>ROC AUC:</strong> 0.63 &mdash; moderate discriminative ability</li>
+            <li><strong>Violent crime precision:</strong> ~14% &mdash; many false positives</li>
+            <li><strong>Violent crime recall:</strong> ~61% &mdash; catches more than half of actual violent incidents</li>
           </ul>
           <p style="margin-top:0.6rem;">The high recall indicates the model is sensitive to violent crime patterns, but the low precision means it also flags many non-violent incidents. This trade-off reflects the inherent difficulty of the problem.</p>
         </div>
 
-        <!-- Figures -->
         <div class="figures-grid">
           <div class="figure-card reveal">
-            <img src="images/svm_confusion_matrix.png" alt="Confusion Matrix — SVM (RBF)">
+            <img src="images/svm_confusion_matrix.png" alt="Confusion Matrix">
             <div class="figure-caption">
               <span class="figure-num">Fig 1</span>
               <p>Confusion matrix showing classification results across 62,543 test observations.</p>
             </div>
           </div>
           <div class="figure-card reveal reveal-d1">
-            <img src="images/svm_roc_curve.png" alt="ROC Curve — Violent vs Non-Violent (SVM)">
+            <img src="images/svm_roc_curve.png" alt="ROC Curve">
             <div class="figure-caption">
               <span class="figure-num">Fig 2</span>
-              <p>ROC curve with AUC of 0.63 — meaningful separation above the random baseline.</p>
+              <p>ROC curve with AUC of 0.63 &mdash; meaningful separation above the random baseline.</p>
             </div>
           </div>
         </div>
 
-        <!-- Interpretation -->
         <div class="content-card reveal" id="interpretation">
-          <h2><span class="icon">🔍</span> Interpretation</h2>
+          <h2><span class="icon">&#128269;</span> Interpretation</h2>
           <p>An AUC of 0.63 means that given a randomly selected violent and non-violent case, the model assigns a higher risk score to the violent one 63% of the time. While not strong enough for deployment, this demonstrates that temporal, spatial, and contextual features carry real predictive signal about crime severity.</p>
           <ul>
-            <li><strong>Violent and non-violent crimes overlap heavily</strong> in time, location, and context — they happen at similar hours, in similar places</li>
+            <li><strong>Violent and non-violent crimes overlap heavily</strong> in time, location, and context &mdash; they happen at similar hours, in similar places</li>
             <li><strong>The 10% base rate</strong> makes the classification inherently challenging; even a well-fitted model struggles with such imbalance</li>
             <li><strong>The model performs well on the majority class</strong> (non-violent) but detecting violent incidents remains difficult due to feature overlap</li>
           </ul>
         </div>
 
-        <!-- Limitations -->
         <div class="content-card reveal" id="limitations">
-          <h2><span class="icon">⚠️</span> Limitations</h2>
+          <h2><span class="icon">&#9888;&#65039;</span> Limitations</h2>
           <ul>
-            <li><strong>Computational cost:</strong> RBF kernel required subsampling to 50K records — full dataset training may improve performance</li>
+            <li><strong>Computational cost:</strong> RBF kernel required subsampling to 50K records &mdash; full dataset training may improve performance</li>
             <li><strong>Class imbalance:</strong> 90/10 split limits precision on the violent class even with balanced weights</li>
             <li><strong>Feature limitations:</strong> Offense severity likely depends on factors not in the data (suspect history, weapon presence, victim relationship)</li>
             <li><strong>Single model:</strong> Ensemble methods or gradient boosting might capture additional non-linear patterns</li>
           </ul>
           <div class="callout">
-            <span class="callout-icon">🔮</span>
+            <span class="callout-icon">&#128302;</span>
             <span>Future work could explore XGBoost for speed, SMOTE for synthetic minority oversampling, or spatial clustering features derived from crime hotspot analysis.</span>
           </div>
         </div>
 
-        <!-- Files -->
         <div class="content-card reveal" id="files">
-          <h2><span class="icon">📁</span> Files</h2>
+          <h2><span class="icon">&#128193;</span> Files</h2>
           <p>Download the Jupyter notebook or explore the raw NIBRS dataset.</p>
           <div class="download-grid">
             <a class="dl-btn" href="notebooks/SVM_Method.ipynb" target="_blank">
-              <span class="dl-icon">📓</span> Notebook (ipynb)
+              <span class="dl-icon">&#128211;</span> Notebook (ipynb)
             </a>
             <a class="dl-btn" href="data/NIBRSPublicView2024.csv" target="_blank">
-              <span class="dl-icon">📄</span> NIBRS Data (CSV)
+              <span class="dl-icon">&#128196;</span> NIBRS Data (CSV)
             </a>
           </div>
         </div>
@@ -901,7 +366,7 @@
     </div>
 
     <footer class="site-footer">
-      <p class="footer-text">© <span id="year"></span> Jorge Mendez <span>·</span> Houston, TX <span>·</span> Built for GitHub Pages</p>
+      <p class="footer-text">&copy; <span id="year"></span> Jorge Mendez <span>&middot;</span> Houston, TX <span>&middot;</span> Built for GitHub Pages</p>
     </footer>
 
   </div>
@@ -909,50 +374,58 @@
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // Theme
     (function(){
-      const r = document.documentElement, b = document.getElementById('themeBtn');
-      const s = localStorage.getItem('jm-theme');
-      const init = s || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+      var r = document.documentElement;
+      var b = document.getElementById('themeBtn');
+      var s = localStorage.getItem('jm-theme');
+      var init = s || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
       r.setAttribute('data-theme', init);
-      b.textContent = init === 'dark' ? '☀' : '☾';
-      b.addEventListener('click', () => {
-        const n = r.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      b.textContent = init === 'dark' ? '\u2600' : '\u263E';
+      b.addEventListener('click', function() {
+        var n = r.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
         r.setAttribute('data-theme', n);
         localStorage.setItem('jm-theme', n);
-        b.textContent = n === 'dark' ? '☀' : '☾';
+        b.textContent = n === 'dark' ? '\u2600' : '\u263E';
       });
     })();
 
-    // Nav scroll
-    const nav = document.getElementById('siteNav');
-    window.addEventListener('scroll', () => {
-      nav.classList.toggle('scrolled', window.scrollY > 60);
+    var navEl = document.getElementById('siteNav');
+    window.addEventListener('scroll', function() {
+      navEl.classList.toggle('scrolled', window.scrollY > 60);
     }, { passive: true });
 
-    // TOC highlight
-    const tocLinks = [...document.querySelectorAll('.toc a')];
-    const tocSecs = tocLinks.map(a => document.querySelector(a.getAttribute('href')));
+    var tocLinks = Array.from(document.querySelectorAll('.toc a'));
+    var tocSecs = tocLinks.map(function(a) { return document.querySelector(a.getAttribute('href')); });
     function updateToc() {
-      const y = window.scrollY + 140;
-      let active = 0;
-      tocSecs.forEach((s, i) => { if (s && s.offsetTop <= y) active = i; });
-      tocLinks.forEach((a, i) => a.classList.toggle('active', i === active));
+      var y = window.scrollY + 140;
+      var active = 0;
+      tocSecs.forEach(function(s, i) { if (s && s.offsetTop <= y) active = i; });
+      tocLinks.forEach(function(a, i) { a.classList.toggle('active', i === active); });
     }
     window.addEventListener('scroll', updateToc, { passive: true });
     updateToc();
 
-    // Scroll reveal
-    const obs = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
+    var obs = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) {
         if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
       });
     }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
-    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+    document.querySelectorAll('.reveal').forEach(function(el) { obs.observe(el); });
 
-    // Cursor glow
     if (window.matchMedia('(pointer: fine)').matches) {
-      const g = document.getElementById('cursorGlow');
-      let mx=0, my=0, gx=0, gy=0;
-      document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; });
-      (function loop(){ gx+=(mx-gx)*0.07; gy+=(my-gy)*0.07; g.style.left=gx+'px'; g.style.top=gy+'px
+      var g = document.getElementById('cursorGlow');
+      var mx = 0, my = 0, gx = 0, gy = 0;
+      document.addEventListener('mousemove', function(e) { mx = e.clientX; my = e.clientY; });
+      (function loop() {
+        gx += (mx - gx) * 0.07;
+        gy += (my - gy) * 0.07;
+        g.style.left = gx + 'px';
+        g.style.top = gy + 'px';
+        requestAnimationFrame(loop);
+      })();
+    } else {
+      document.getElementById('cursorGlow').style.display = 'none';
+    }
+  </script>
+</body>
+</html>
