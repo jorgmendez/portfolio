@@ -268,34 +268,46 @@
     .hero h1 {
       font-family: var(--font-display);
       font-weight: 900;
-      font-size: clamp(2.8rem, 7vw, 5.2rem);
-      line-height: 1.08;
-      letter-spacing: -0.035em;
-      margin-bottom: 1.5rem;
+      font-size: clamp(3.2rem, 9vw, 6rem);
+      line-height: 1.05;
+      letter-spacing: -0.04em;
+      margin-bottom: 1rem;
       opacity: 0;
       animation: fadeUp 0.8s var(--ease-out-expo) 0.4s forwards;
     }
-    .hero h1 .line { display: block; }
     .hero h1 .highlight {
       background: linear-gradient(135deg, var(--accent) 0%, var(--accent-purple) 50%, var(--accent-warm) 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
     }
-    .hero-sub {
-      font-size: clamp(1rem, 1.8vw, 1.15rem);
-      font-weight: 400;
+    .hero-tagline {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+      letter-spacing: -0.01em;
       color: var(--text-secondary);
-      max-width: 620px;
+      margin-bottom: 1.2rem;
+      opacity: 0;
+      animation: fadeUp 0.8s var(--ease-out-expo) 0.55s forwards;
+    }
+    .hero-tagline .tl-accent {
+      color: var(--accent);
+    }
+    .hero-sub {
+      font-size: clamp(0.92rem, 1.6vw, 1.05rem);
+      font-weight: 400;
+      color: var(--text-tertiary);
+      max-width: 600px;
       margin: 0 auto 2.5rem;
       line-height: 1.7;
       opacity: 0;
-      animation: fadeUp 0.8s var(--ease-out-expo) 0.6s forwards;
+      animation: fadeUp 0.8s var(--ease-out-expo) 0.7s forwards;
     }
     .hero-actions {
       display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
       opacity: 0;
-      animation: fadeUp 0.8s var(--ease-out-expo) 0.8s forwards;
+      animation: fadeUp 0.8s var(--ease-out-expo) 0.85s forwards;
     }
     .hero-btn {
       font-family: var(--font-mono);
@@ -543,6 +555,22 @@
       margin-bottom: 0.85rem;
     }
     .skills-visual { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+
+    /* ── Skill Groups with category labels ── */
+    .skills-grouped { display: flex; flex-direction: column; gap: 1.1rem; }
+    .skill-group-label {
+      font-family: var(--font-mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-tertiary);
+      padding-bottom: 0.3rem;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 0.1rem;
+    }
+    .skill-group-chips { display: flex; flex-wrap: wrap; gap: 0.45rem; }
+
+    /* ── Skill Chips — All equal + hover detail ── */
     .skill-chip {
       font-family: var(--font-mono);
       font-size: 0.68rem;
@@ -554,6 +582,7 @@
       color: var(--text-secondary);
       transition: all 0.3s var(--ease-out-expo);
       cursor: default;
+      position: relative;
     }
     .skill-chip:hover {
       border-color: var(--accent);
@@ -561,11 +590,33 @@
       background: var(--accent-glow);
       transform: translateY(-2px);
     }
-    .skill-chip.featured {
-      border-color: var(--accent);
-      color: var(--accent);
-      background: var(--accent-glow);
+    /* Tooltip on hover */
+    .skill-chip[data-detail]::after {
+      content: attr(data-detail);
+      position: absolute;
+      bottom: calc(100% + 8px);
+      left: 50%;
+      transform: translateX(-50%) translateY(4px);
+      font-family: var(--font-body);
+      font-size: 0.65rem;
+      letter-spacing: 0;
+      white-space: nowrap;
+      background: var(--bg-deep);
+      color: var(--text-primary);
+      border: 1px solid var(--border-hover);
+      padding: 0.4rem 0.7rem;
+      border-radius: 8px;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.25s var(--ease-out-expo);
+      z-index: 10;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
     }
+    .skill-chip[data-detail]:hover::after {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
     @media(max-width:768px) {
       .about-grid { grid-template-columns: 1fr; }
       .about-intro { grid-template-columns: 1fr; }
@@ -981,9 +1032,9 @@
       <div class="hero-content">
         <div class="hero-badge">Open to Opportunities · May 2026 Grad</div>
         <h1>
-          <span class="line">Turning Data Into</span>
-          <span class="line"><span class="highlight">Financial Insight</span></span>
+          <span class="highlight">Jorge Mendez</span>
         </h1>
+        <p class="hero-tagline">Turning Data Into <span class="tl-accent">Financial Insight</span></p>
         <p class="hero-sub">Data analyst and researcher blending Python, R, SQL, and Power BI with financial modeling to deliver insights that drive real business decisions. Currently at UH–Downtown with experience across BASF, Blueprint, and Amazon.</p>
         <div class="hero-actions">
           <a class="hero-btn filled" href="#projects">View My Work</a>
@@ -1043,24 +1094,39 @@
             <p>I'm a double-major in Data Science and Applied Statistics with a finance domain focus and a mathematics minor at the University of Houston–Downtown. I've held analyst roles at UHD Advancement, Purdue's Data Mine with BASF, and Blueprint—each sharpening my ability to turn messy data into clear, stakeholder-ready stories.</p>
             <p>From forecasting 5-year sales with 20+ years of agricultural data to building Power BI dashboards with weekly refreshes for executives, I thrive wherever data meets real business decisions.</p>
           </div>
-          <div class="skills-visual">
-            <span class="skill-chip featured">Python</span>
-            <span class="skill-chip featured">R</span>
-            <span class="skill-chip featured">SQL</span>
-            <span class="skill-chip featured">Power BI</span>
-            <span class="skill-chip">Excel</span>
-            <span class="skill-chip">Alteryx</span>
-            <span class="skill-chip">Snowflake</span>
-            <span class="skill-chip">ETL Workflows</span>
-            <span class="skill-chip">Data Transformation</span>
-            <span class="skill-chip">Relational Modeling</span>
-            <span class="skill-chip">KPI Dashboards</span>
-            <span class="skill-chip">Variance Analysis</span>
-            <span class="skill-chip">Financial Analysis</span>
-            <span class="skill-chip">Regression</span>
-            <span class="skill-chip">Bayesian Analysis</span>
-            <span class="skill-chip">CAPM</span>
-            <span class="skill-chip">Spanish (Fluent)</span>
+          <div class="skills-grouped">
+            <div>
+              <div class="skill-group-label">Languages & Tools</div>
+              <div class="skill-group-chips">
+                <span class="skill-chip" data-detail="Pandas, scikit-learn, statsmodels">Python</span>
+                <span class="skill-chip" data-detail="tidyverse, ggplot2, forecast">R</span>
+                <span class="skill-chip" data-detail="Joins, CTEs, window functions">SQL</span>
+                <span class="skill-chip" data-detail="DAX, weekly executive dashboards">Power BI</span>
+                <span class="skill-chip" data-detail="Pivot tables, XLOOKUP, VBA basics">Excel</span>
+                <span class="skill-chip" data-detail="ETL automation & data blending">Alteryx</span>
+                <span class="skill-chip" data-detail="Cloud data warehouse queries">Snowflake</span>
+              </div>
+            </div>
+            <div>
+              <div class="skill-group-label">Techniques</div>
+              <div class="skill-group-chips">
+                <span class="skill-chip" data-detail="Extract, transform, load pipelines">ETL Workflows</span>
+                <span class="skill-chip" data-detail="Cleaning & reshaping raw data">Data Transformation</span>
+                <span class="skill-chip" data-detail="Schema design & normalization">Relational Modeling</span>
+                <span class="skill-chip" data-detail="Linear, logistic, multifactor">Regression</span>
+                <span class="skill-chip" data-detail="Prior/posterior inference">Bayesian Analysis</span>
+              </div>
+            </div>
+            <div>
+              <div class="skill-group-label">Domain Knowledge</div>
+              <div class="skill-group-chips">
+                <span class="skill-chip" data-detail="Real-time metric tracking">KPI Dashboards</span>
+                <span class="skill-chip" data-detail="Budget vs. actual analysis">Variance Analysis</span>
+                <span class="skill-chip" data-detail="AP/AR, forecasting, reporting">Financial Analysis</span>
+                <span class="skill-chip" data-detail="Capital Asset Pricing Model">CAPM</span>
+                <span class="skill-chip" data-detail="Native speaker — bilingual">Spanish (Fluent)</span>
+              </div>
+            </div>
           </div>
         </div>
         <div class="about-card reveal reveal-d1">
